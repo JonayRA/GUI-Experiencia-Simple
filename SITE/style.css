@@ -1,0 +1,653 @@
+/* Fondo de la página en gris para que resalte el negro del ND y el PFD*/
+body {
+  background-color: hsl(0, 0%, 90%);
+  font-family: "Bahnschrift Light", sans-serif;
+}
+
+canvas {
+	image-rendering: pixelated;
+}
+
+#PFDcanvasContainer {
+	position:absolute;
+	left: 50%;
+  	margin-left: -700px; /* mitad del ancho de la pantalla */
+  	top: 50%;
+  	margin-top: -290px; /* mitad de la altura de la pantalla */
+  	/*border: green 3px solid;*/
+}
+
+#PFD {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#FMA1 {
+	position: absolute;
+  	left: 0%;
+  	top: 1.5%;
+  	width: 20%;
+  	height: 15%;
+  	border-right: white 3px solid;
+}
+
+#FMA2 {
+	position: absolute;
+  	left: 20%;
+  	top: 1.5%;
+  	width: 20%;
+  	height: 15%;
+  	border-right: white 3px solid;
+}
+
+#FMA3 {
+	position: absolute;
+  	left: 40%;
+  	top: 1.5%;
+  	width: 20%;
+  	height: 15%;
+  	border-right: white 3px solid;
+}
+
+#FMA4 {
+	position: absolute;
+  	left: 60%;
+  	top: 1.5%;
+  	width: 20%;
+  	height: 15%;
+  	border-right: white 3px solid;
+}
+
+#FMA5 {
+	position: absolute;
+  	left: 80%;
+  	top: 1.5%;
+  	width: 20%;
+  	height: 15%;
+}
+
+#ASI {
+	position: absolute;
+	left: 1%;
+	top: 22.1%;
+	width: 11.5%;
+	height: 54.5%;
+	border: white 2px solid;
+	border-left-color: transparent;
+	background-color: rgb(150, 150, 150);
+}
+
+#VSI {
+	position: absolute;
+	right: 3%;
+	top: 19.5%;
+	width: 4.9%;
+	height: 61.5%;
+	/*border: blue 3px solid;*/
+}
+
+#VSItext {
+	position: absolute;
+	right: -7.5%;
+	top: 24%;
+	width: 15%;
+	height: 54.5%;
+}
+
+#ALT {
+	position: absolute;
+	top:22.1%;
+	right:16%;
+	height:54.5%;
+	width:9.4%;
+	border: white 2px solid;
+	border-left-color: transparent;
+	background-color: rgb(150, 150, 150);
+}
+
+#altIndicator {
+	position: absolute;
+	top: 45%;
+	width: 14%;
+	right: 11.2%;
+	/*border: white 3px solid;*/
+}
+
+#AH {
+	position: absolute;
+	top:22.1%;
+	left: 21.9%;
+	height:54.5%;
+	width:42.3%;
+	/* border: brown 3px solid; */
+}
+
+#HDG {
+	position: absolute;
+	top:85.6%;
+	left: 21.9%;
+	height:8.1%;
+	width:42.3%;
+	border: white 2px solid;
+	border-bottom-color: transparent;
+	background-color: rgb(150, 150, 150);
+}
+
+#NDcanvasContainer {
+  position: absolute;
+  left: 50%;
+  margin-left: -40px; /* mitad del ancho de la pantalla más el espacio de 10px */
+  top: 50%;
+  margin-top: -290px; /* mitad de la altura de la pantalla */
+  /*border: yellow 3px solid;*/
+  overflow: hidden;
+}
+
+#ND {
+  position: absolute;
+  /*left: 50%;
+  margin-left: -40px; /* mitad del ancho de la pantalla más el espacio de 10px */
+  /* top: 50%;
+  margin-top: -290px; /* mitad de la altura de la pantalla */
+  /* border: purple 3px solid; */
+}
+
+#notificationBoxCS{
+  position: absolute;
+  left: 14.1%;
+  top:0%;
+  width: 71.79%;
+  height: 19.55%;
+  /*border: orange 5px solid; /*darkslategrey*/
+
+}
+
+#accepterRecommandationCS{
+  position: absolute;
+  right: 52.5%;
+  top: 12%;
+  width: 15%;
+  height: 4.5%;
+  font-size: 16px; 
+  font-family: Andale Mono, monospace;
+  color: black;
+  background-color: hsl(50, 90%, 47%); /*hsl(40, 80%, 50%); /*gold; /*goldenrod;*/
+  /*border: 2px solid darkorange;*/
+  transition: background-color 0.1s ease;
+  border-radius: 5px;
+}
+#rejeterRecommandationCS{
+  position: absolute;
+  left:52.5%;
+  top: 12%;
+  width: 15%;
+  height: 4.5%;
+  font-size: 16px; 
+  font-family: Andale Mono, monospace;
+  color: black;
+  background-color: hsl(50, 90%, 47%); /*hsl(40, 80%, 50%); /*gold; /*darkorange;*/
+  /*border: 2px solid darkorange;*/
+  transition: background-color 0.1s ease;
+  border-radius: 5px;
+}
+
+#accepterRecommandationCS:hover, #rejeterRecommandationCS:hover {
+    background-color: hsl(45, 90%, 47%); 
+}
+
+#accepterRecommandationCS:active, #rejeterRecommandationCS:active {
+    background-color: hsl(50, 90%, 47%); 
+}
+ 
+
+#avionND {
+	position: absolute;
+	left: 45%;
+	top: 87%;
+	width: 10%;
+	height: 10%;
+	/*border: purple 3px solid;*/
+}
+
+#cambiarImagen {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 160px;
+}
+
+#pressure {
+	position: absolute;
+	top: 80.6%;
+	left: 69.2%;
+	height: 19.4%;
+	width: 30.8%;
+	/* border: fuchsia 3px solid; */
+	z-index: 2;
+}
+
+#NAVPFD {
+	position: absolute;
+	top: 80.6%;
+	left: 0%;
+	height: 19.4%;
+	width: 16.8%;
+	/*border: cyan 3px solid;*/
+}
+
+#resetCase {
+  position: absolute;
+  bottom: 40px;
+  right: 10px;
+  width: 160px;
+}
+
+#soumettreContrefactuel {
+	position: absolute;
+	bottom: 70px;
+	right: 10px;
+  	width: 160px;
+}
+
+#finirExperience {
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+  width: 160px;
+}
+
+/*#eviterDessus {
+  position: absolute;
+  bottom: 350px;
+  right: 20px;  antes era 10
+  width: 160px;
+  font-size: 16px;
+}
+
+#sansChangement {
+	position: absolute;
+	bottom: 400px;
+	right: 20px;
+	width: 160px;
+  font-size: 16px;
+}
+
+#option1 {
+  position: absolute;
+  bottom: 100px; dif de 30*
+  bottom: 500px;
+  right: 20px;
+  width: 160px;
+  font-size: 16px;
+}
+
+#option2 {
+  position: absolute;
+  bottom: 450px;
+  right: 20px;
+  width: 160px;
+  font-size: 16px;
+}*/
+
+#eviterDessus {
+  position: absolute;
+  top: 100px;
+  right: 24px;
+  width: 160px;
+  font-size: 16px;
+}
+
+#sansChangement {
+  position: absolute;
+  top: 100px;
+  right: 540px;
+  width: 160px;
+  font-size: 16px;
+}
+
+#option1 {
+  position: absolute;
+  /*bottom: 100px;*/
+  top: 100px;
+  right: 368px;
+  width: 160px;
+  font-size: 16px;
+}
+
+#option2 {
+  position: absolute;
+  top: 100px;
+  right: 196px;
+  width: 160px;
+  font-size: 16px;
+}
+
+#retourDeuxiemeOption {
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	width: 160px;
+}
+
+
+
+#waypt1 {
+	position: absolute;
+	width: 20px;
+	height: 40px;
+	left: 180px;
+	top: 350px;
+}
+
+#waypt2 {
+	position: absolute;
+	width: 20px;
+	height: 40px;
+	left: 400px;
+	top: 300px;
+}
+
+
+
+/*#situationFuture {
+	position: absolute;
+	bottom: 70px;
+	right: 10px;
+  	width: 160px;
+}*/
+
+
+.dropdown {
+  position: absolute;
+  bottom: 400px;
+  right: 10px;
+  width: 160px;
+}
+
+.dropdown #menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #f1f1f1;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+.dropdown.open #menu {
+  display: block;
+}
+
+.dropdown #toggleButton {
+  display: flex;
+  align-items: center;
+  background-color: #f1f1f1;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown #toggleButton::after {
+  content: "▼";
+  margin-left: 5px;
+}
+
+.dropdown #menu li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown #menu li:hover {
+  background-color: #ddd;
+}
+
+.dropdown #menu li.selected {
+  background-color: #aaa;
+  color: white;
+}
+
+#matrizCorrelacion {
+    display: flex;
+    justify-content: center;
+}
+
+#tableVariables{
+	border-collapse: collapse;
+	position: absolute;
+	right: 20px;
+	top: 25px;
+}
+
+
+#tableALTCellule{
+	border-collapse: collapse;
+	position: absolute;
+	right: 900px;
+	top: 25px;
+	border: 2px solid black;
+	width: 600px;
+}
+
+#tableMouvementCellule{
+	border-collapse: collapse;
+	position: absolute;
+	right: 900px;
+	top: 80px;
+	border: 2px solid black;
+	width: 600px;
+}
+
+.invisible-text {
+      color: transparent;
+}
+
+.visible-text {
+      color: black; /* Puedes ajustar el color original según tus necesidades */
+    }
+
+
+
+
+
+td {
+  border: 2px dashed black;
+  border-bottom: 2px dashed black;
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+  width: 25%;
+  text-align: center;
+  width: 20%;
+}
+th {
+  border: 2px solid black;
+}
+
+
+
+tr#filaCombDispo {
+  /*border-top: 3px solid black;
+  border-bottom: 3px solid black;
+  border-left: 3px solid black;
+  border-right: 3px solid black;*/
+  border: 2px solid black;
+
+}
+
+.inputClass {
+  position: absolute;
+  bottom: 300px;
+  right: 10px;
+  width: 160px;
+}
+
+/*#PFD, #ND {
+  width: 250vw;
+  height: 250vh;
+} */
+
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: hsl(0, 0%, 90%);;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  z-index: 1000; 
+}
+
+.popup-contenido {
+  position: relative;
+  z-index: 1001;
+}
+#opcionA {
+	position: relative;
+	top: 50px;
+	left: -350px;
+	font-size: 16px;
+}
+#opcionB {
+	position: relative;
+	top: 50px;
+	left: -300px;
+	font-size: 16px;
+}
+
+#opcionC {
+	position: relative;
+	top: 50px;
+	left: -250px;
+	font-size: 16px;
+}
+
+#montrerSituation {
+	position: relative;
+	top: 50px;
+	left: -200px;
+	font-size: 16px;
+}
+
+#QUASA{
+	display: flex;
+    flex-direction: column; /* Alinea los elementos verticalmente */
+    align-items: center; 
+}
+
+#Vrai {
+	position: relative;
+	/*top: 50px;
+	left: -350px;*/
+	font-size: 16px;
+	width: 100px;
+}
+#Faux {
+	position: relative;
+	/*top: 50px;
+	left: -300px;*/
+	font-size: 16px;
+	width: 100px;
+}
+
+label[for="nivelConfiance"] {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+/*#nivelConfiance {
+	font-size: 16px;
+	font-weight: 700;
+	margin-top: 50px;
+}
+
+#nivConfiance {
+	margin-top: 50px;
+	font-size: 16px;
+}
+ #contenedorNivelConfianza {
+    width: 400px;
+    margin-left: 120px;
+  }*/
+
+/*#valorNivelConfianza {
+	position: relative;
+	top: 80px;
+	left: -300px;
+	font-size: 16px;
+}*/
+
+.seleccionado {
+    background-color: #333; /* Cambiar a gris oscuro o el color deseado */
+	color: white;
+}
+
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(255, 255, 255, 0.7); /* Fondo blanco semitransparente */
+    padding-top: 100px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+#contenedorNivelConfianza {
+    display: flex;
+    flex-wrap: nowrap; /* Evitar que los elementos se envuelvan */
+    margin-top: 0px;
+    margin-left: 987px;
+    width: 100%;
+    overflow-x: auto;
+}
+
+#contenedorNivelConfianza button {
+    margin-right: 10px;
+    /*padding: 8px 12px;*/ 
+    font-size: 16px; 
+    width: 100px; 
+    text-align: center; 
+}
+
+#contenedorNivelConfianza button:last-child {
+    margin-right: 0;
+}
+
+.texto {
+    margin-bottom: 5px; /* Espacio entre el texto y los botones */
+    margin-top: 15px;
+}
+
+#indicadorNumeroCaso {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    background-color: hsl(0, 0%, 90%); /* Color del fondo */
+    color: hsl(0, 0%, 90%); /* Color del texto (coincide con el fondo) */
+    padding: 5px;
+}
+
+
+/*.botones {
+    display: flex;
+    flex-wrap: wrap;
+}*/
