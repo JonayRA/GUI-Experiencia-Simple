@@ -8,11 +8,13 @@
 // Declaración de variables globales
 var urlParams = new URLSearchParams(window.location.search);
 const numParticipant = urlParams.get("numParticipant");
-const condition = urlParams.get("condition");
-const session = urlParams.get("session");
+var condition = urlParams.get("condition");
+var session = urlParams.get("session");
 const participantCS = urlParams.get("numParticipantCS");
+console.log(participantCS);
 const participantCS2 = urlParams.get("numParticipantCS2");
 const nombreDeCasContrefactuels = 20;
+const conditionPetiteXP = urlParams.get("conditionPetiteXP");
 
 var title = document.getElementById("Titulo");
 title.textContent = "P" + numParticipant + "C" + condition + "S" + session;
@@ -28,9 +30,13 @@ if (participantCS == "8"){
 
 //const QUASApositions = [1, 5, 8, 9];
 //const QUASApositions = [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90];
+imagesData = imagesData.slice(-43, -20);
 // Randomized:
-const QUASApositions = []; // [ 7,  12,  19,  26,  31,  37,  42, 49,  56,  62,  69,  76,  81,  86,  91, 97, 104, 111, 118, 125, 130, 135, 141, 148, 154, 161, 166, 173, 180];
-const counterfactPositions = [2, 4, 6];
+const QUASApositions = [1]; // [ 7,  12,  19,  26,  31,  37,  42, 49,  56,  62,  69,  76,  81,  86,  91, 97, 104, 111, 118, 125, 130, 135, 141, 148, 154, 161, 166, 173, 180];
+//const counterfactPositions = [2, 4, 6];
+const counterfactPositions = Array.from({length: 20}, (_, i) => imagesData.length - 40 + i);
+const recommendationPositions = Array.from({length: 20}, (_, i) => imagesData.length - 20 + i);
+
 
 let PFD = document.getElementById('PFD');
 let ctxPFD = PFD.getContext('2d');
@@ -192,6 +198,8 @@ const popupMatrizCorrelacion = document.getElementById('matrizCorrelacion');
 const popupNASATLX = document.getElementById('NASATLX');
 const popupTrustInAuto1 = document.getElementById('trustInAuto1');
 const popupTrustInAuto2 = document.getElementById('trustInAuto2');
+const popupEntrainement = document.getElementById('attenteEntrainement');
+const iframePopupEntrainement = document.getElementById('iframeattenteEntrainement');
 const TituloFin = document.getElementById('TituloFin');
 const accepterRecommandationCS = document.getElementById('accepterRecommandationCS');
 const rejeterRecommandationCS = document.getElementById('rejeterRecommandationCS');
@@ -211,7 +219,8 @@ popupMatrizCorrelacion.style.display = 'none';
 popupNASATLX.style.display = 'none';
 popupTrustInAuto1.style.display = 'none';
 popupTrustInAuto2.style.display = 'none';
-popupFinal.style.display = 'none';
+popupFinal.style.display = '';
+popupEntrainement.style.display = 'none';
 
 const processTracing = 0;
 let waypointChoisiInitialement = null;
@@ -798,6 +807,55 @@ async function cambiarCaso() {
 }
   currentImage = (currentImage + 1) // % imagesData.length;
 
+  if(currentImage == recommendationPositions[0]){
+    popupEntrainement.style.display = '';
+    let arrayJSONSentrainement = arrayJSONSGuardar;
+
+    if(conditionPetiteXP == 1){
+
+      arrayJSONSentrainement = arrayJSONSGuardar.slice(0,-40);
+
+    }else if(conditionPetiteXP == 2){
+
+      let part1 = arrayJSONSGuardar.slice(0,-60);
+      let part2 = arrayJSONSGuardar.slice(-40)
+
+      arrayJSONSentrainement = part1.concat(part2);
+
+    }
+
+    // condition = 2;
+    session = 2;
+    console.log(arrayJSONSentrainement);
+
+    enviarJSONaCSV(arrayJSONSentrainement, 38, participantCS);
+    /*let modelosEntrenados = await modelsTrained(38,2);
+    if (modelosEntrenados == true){
+      var mensaje = 'Modelos are trained';
+      iframePopupEntrainement.contentWindow.postMessage({ message: mensaje, data: '*' }, '*');
+    }*/
+    setTimeout(async function() {
+    let modelosEntrenados = await modelsTrained(38,participantCS);
+    if (modelosEntrenados == true){
+        var mensaje = 'Modelos are trained';
+        iframePopupEntrainement.contentWindow.postMessage({ message: mensaje, data: '*' }, '*');
+    } else {
+        console.log('Aun no entrenados');
+        var intervalId = setInterval(async function() {
+            modelosEntrenados = await modelsTrained(38,participantCS);
+            if (modelosEntrenados == true){
+                var mensaje = 'Modelos are trained';
+                iframePopupEntrainement.contentWindow.postMessage({ message: mensaje, data: '*' }, '*');
+                clearInterval(intervalId);
+            }
+        }, 10000); 
+    }
+}, 75000); 
+    //console.log('ModelsTrained',modelosEntrenados);
+
+    // console.log(arrayJSONSGuardar);
+  }
+
   if(currentImage < imagesData.length){
   // imgND.src = imagenes[currentImage];
   imgND.src = imagesData[currentImage].src;
@@ -892,7 +950,7 @@ indicadorNumeroCaso.textContent = casoNumeroTexto;
   startY = 0;
   canvasAvionNDX = 0;
   canvasAvionNDY = 0;*/
-}else if (currentImage == imagesData.length && session == 1){
+}else if (currentImage == imagesData.length){ // && session == 1){
 	popupMatrizCorrelacion.style.display = '';
 }else if (currentImage == imagesData.length && session != 1){
 	popupNASATLX.style.display='';
@@ -1784,7 +1842,7 @@ buttonOption1.addEventListener('click', async function () {
           let feautresCalculadas = calculadoraVariablesCS(currentImage);
 
           // await sendTrainingCase(participantCS, feautresCalculadas.features, waypointChoisi);
-          sendTrainingCase(participantCS, feautresCalculadas.features, waypointChoisi);
+          // sendTrainingCase(participantCS, feautresCalculadas.features, waypointChoisi);
           // accuraciesCS = await getAccuraciesCS(participantCS);
           accuraciesCS = getAccuraciesCS(participantCS);
 
@@ -1792,7 +1850,7 @@ buttonOption1.addEventListener('click', async function () {
           let feautresCalculadasAlternativas = calculadoraVariablesCSordrePreference(currentImage);
 
           // await sendTrainingCase(participantCS2, feautresCalculadasAlternativas.features, waypointChoisi);
-          sendTrainingCase(participantCS2, feautresCalculadasAlternativas.features, waypointChoisi);
+          // sendTrainingCase(participantCS2, feautresCalculadasAlternativas.features, waypointChoisi);
           /*datosGuardar = {"Timestamp": Date.now(), "Participant": numParticipant, "Participant CS": participantCS, "Session": session, "Condition": condition, "Waypoint Choisi": waypointChoisi, "Waypoint Initial": waypointChoisiInitialement};
         feautresGuardar = feautresCalculadas.features;
         globalGuardar = Object.assign({}, datosGuardar, feautresGuardar,accuraciesCS);
@@ -1942,14 +2000,14 @@ buttonOption2.addEventListener('click', async function () {
 
           /*await sendTrainingCase(participantCS, feautresCalculadas.features, waypointChoisi);
           accuraciesCS = await getAccuraciesCS(participantCS);*/
-          sendTrainingCase(participantCS, feautresCalculadas.features, waypointChoisi);
+          // sendTrainingCase(participantCS, feautresCalculadas.features, waypointChoisi);
           accuraciesCS = getAccuraciesCS(participantCS);
           arrayJSONSAccuracies.push(accuraciesCS);
 
           let feautresCalculadasAlternativas = calculadoraVariablesCSordrePreference(currentImage);
 
           // await sendTrainingCase(participantCS2, feautresCalculadasAlternativas.features, waypointChoisi);
-          sendTrainingCase(participantCS2, feautresCalculadasAlternativas.features, waypointChoisi);
+         // sendTrainingCase(participantCS2, feautresCalculadasAlternativas.features, waypointChoisi);
           /*datosGuardar = {"Timestamp": Date.now(), "Participant": numParticipant, "Participant CS": participantCS, "Session": session, "Condition": condition, "Waypoint Choisi": waypointChoisi, "Waypoint Initial": waypointChoisiInitialement};
         feautresGuardar = feautresCalculadas.features;
         globalGuardar = Object.assign({}, datosGuardar, feautresGuardar,accuraciesCS);
@@ -2241,14 +2299,14 @@ buttonsansChangement.addEventListener('click', async function(){
 
   				/*await sendTrainingCase(participantCS, feautresCalculadas.features, waypointChoisi);
   				accuraciesCS = await getAccuraciesCS(participantCS);*/
-          sendTrainingCase(participantCS, feautresCalculadas.features, waypointChoisi);
+          // sendTrainingCase(participantCS, feautresCalculadas.features, waypointChoisi);
           accuraciesCS = getAccuraciesCS(participantCS);
   				arrayJSONSAccuracies.push(accuraciesCS);
 
           let feautresCalculadasAlternativas = calculadoraVariablesCSordrePreference(currentImage);
 
           // await sendTrainingCase(participantCS2, feautresCalculadasAlternativas.features, waypointChoisi);
-          sendTrainingCase(participantCS2, feautresCalculadasAlternativas.features, waypointChoisi);
+          // sendTrainingCase(participantCS2, feautresCalculadasAlternativas.features, waypointChoisi);
   				/*datosGuardar = {"Timestamp": Date.now(), "Participant": numParticipant, "Participant CS": participantCS, "Session": session, "Condition": condition, "Waypoint Choisi": waypointChoisi, "Waypoint Initial": waypointChoisiInitialement};
 				feautresGuardar = feautresCalculadas.features;
 				globalGuardar = Object.assign({}, datosGuardar, feautresGuardar,accuraciesCS);
@@ -2333,13 +2391,13 @@ buttonParDessus.addEventListener('click', async function(){
 
   				/*await sendTrainingCase(participantCS, feautresCalculadas.features, waypointChoisi);
   				accuraciesCS = await getAccuraciesCS(participantCS);*/
-          sendTrainingCase(participantCS, feautresCalculadas.features, waypointChoisi);
+          // sendTrainingCase(participantCS, feautresCalculadas.features, waypointChoisi);
           accuraciesCS = getAccuraciesCS(participantCS);
   				arrayJSONSAccuracies.push(accuraciesCS);
           let feautresCalculadasAlternativas = calculadoraVariablesCSordrePreference(currentImage);
 
           // await sendTrainingCase(participantCS2, feautresCalculadasAlternativas.features, waypointChoisi);
-          sendTrainingCase(participantCS2, feautresCalculadasAlternativas.features, waypointChoisi);
+          // sendTrainingCase(participantCS2, feautresCalculadasAlternativas.features, waypointChoisi);
   				/*datosGuardar = {"Timestamp": Date.now(), "Participant": numParticipant, "Participant CS": participantCS, "Session": session, "Condition": condition, "Waypoint Choisi": waypointChoisi, "Waypoint Initial": waypointChoisiInitialement};
 				feautresGuardar = feautresCalculadas.features;
 				globalGuardar = Object.assign({}, datosGuardar, feautresGuardar,accuraciesCS);
@@ -2698,12 +2756,48 @@ async function saveData2(ArrayJSONS){
 
 	popupFinal.style.display = '';
 
+  TituloFin.textContent = 'Merci de votre participation.';
+
+  const divFinal = document.getElementById('popupFinal');
+  /*const secondLine = document.createElement('p');
+  secondLine.textContent = 'Veuillez indiquer à l\'expérimentateur que vous avex fini l\'expérience.';
+  divFinal.appendChild(secondLine);*/
+
+  const boutonFin = document.createElement('button');
+  boutonFin.textContent = 'Bouton pour l\'expérimentateur';
+
+  // Agregar el botón al contenedor
+  divFinal.appendChild(boutonFin);
+
+  // Función que se ejecutará cuando se haga clic en el botón
+  async function continuar() {
+      // Espera al clic del botón
+      await new Promise(resolve => {
+          boutonFin.addEventListener('click', () => {
+              resolve(); // Resuelve la promesa cuando se hace clic en el botón
+          });
+      });
+
+      // Aquí puedes agregar el código que deseas ejecutar después de hacer clic en el botón
+      console.log('Se hizo clic en el botón. Continuando...');
+  }
+
+  // Agregar un evento de clic al botón
+  boutonFin.addEventListener('click', continuar);
+
+
+  
+
 	//await esperarXSegundos(2);
 
 	
 
 	localStorage.setItem('participant'+numParticipant+'_session'+session+'condition'+condition, JSON.stringify(ArrayJSONS));
 	localStorage.setItem('participant'+numParticipant+'_session'+session+'condition'+condition+'QUASA', JSON.stringify(arrayJSONSQUASA))
+
+
+
+
 
 	const fileContent = JSON.stringify(ArrayJSONS, null, 2);
     const bb = new Blob([fileContent], {
@@ -2952,11 +3046,11 @@ buttonsoumettreContrefactuel.addEventListener('click', async function(){
 
   	/*await sendTrainingCase(participantCS, feautresCalculadas.features, wayptAlternatif);
   	accuraciesCS = await getAccuraciesCS(participantCS);*/
-    sendTrainingCase(participantCS, feautresCalculadas.features, wayptAlternatif);
+    // sendTrainingCase(participantCS, feautresCalculadas.features, wayptAlternatif);
     accuraciesCS = getAccuraciesCS(participantCS);
     let feautresCalculadasAlternativas = calculadoraVariablesCSordrePreference(currentImage);
     // await sendTrainingCase(participantCS2, feautresCalculadasAlternativas.features, waypointAlternatif);
-    sendTrainingCase(participantCS2, feautresCalculadasAlternativas.features, waypointAlternatif);
+    // sendTrainingCase(participantCS2, feautresCalculadasAlternativas.features, waypointAlternatif);
   	
     datosGuardar = {"Timestamp": Date.now(), "Participant": numParticipant, "Participant CS": participantCS, "Session": session, "Condition": condition, "Waypoint Alternatif": waypointAlternatif};
 	feautresGuardar = feautresCalculadas.features;
@@ -3039,7 +3133,7 @@ window.addEventListener('message', function(event) {
                     // Realizar la acción en la página principal
                     arrayJSONSGuardar.push({"Matrice correlation":event.data.data});
                     popupMatrizCorrelacion.style.display = 'none';
-                    if (session == 1){
+                    if (true){ //(session == 1){
                     popupNASATLX.style.display = '';
                   }
                 } 
@@ -3078,6 +3172,13 @@ window.addEventListener('message', function(event) {
                 }
                 
             }
+
+            if (event.source === document.getElementById('iframeattenteEntrainement').contentWindow) {
+                // Verificar el contenido del mensaje
+                if (event.data.message === 'Accepted Instructions') {
+                  popupEntrainement.style.display = 'none';
+                }
+              }
             
 });
 

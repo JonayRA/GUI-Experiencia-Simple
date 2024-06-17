@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Bienvenue</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            padding: 0;
+            background-color: #f0f0f0;
+            font-size: 22px;
+        }
+
+        .container {
+            /*display: flex;*/
+            /*margin-top: 40px;*/
+            /*justify-content: center;*/
+            align-items: center;
+            height: 100vh;
+        }
+
+        .welcome-text {
+            margin-top: 1000px;
+            font-size: 2em;
+            color: #333;
+        }
+
+        .welcome-button {
+            /*margin-top: 20px;
+            margin-left: 70px;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;*/
+            margin-bottom: 40px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .welcome-button:disabled {
+            background-color: #ccc; /* change la couleur de fond lorsque le bouton est désactivé */
+            cursor: not-allowed; /* change le curseur lorsque le bouton est désactivé */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div>
+            <!--<div class="welcome-text">Bienvenue à l'expérience!</div>-->
+            <div><p>Un système d’aide à la décision a été entraîné avec les décisions que vous avez prises dans la session précédente.</p>
+                <p> Ce système est désormais capable de suggérer des décisions aux situations présentées. </p>
+                <p> <strong>Le système peut se tromper.</strong> Il ne fait que des suggestions, c’est à vous de les accepter ou les rejeter en fonction des données présentées.</p>
+                <p>Le système vous montrera la décision qu’il suggère s'il n'est pas d'accord avec la décision que vous avez pris, tel qu’illustré. <img src="sugerenciaSistema.png" style="margin-top: 20px"></p>
+                <p>Si <strong>vous jugez</strong> que la décision suggérée est préférable à celle que vous aviez choisi vous pouvez accepter la suggestion en cliquant sur Accepter.</p>
+                <p>Si <strong>vous jugez</strong> que votre décision est préférable à celle suggérée, vous pouvez rejeter la suggestion en cliquant sur Annuler.</p>
+                <p>Ensuite, le cas suivant sera présenté.</p> </div>
+
+            <button class="welcome-button" id = "bouton" onclick="redirectToOtherPage()">Cliquez ici pour continuer</button>
+        </div>
+    </div>
+
+    <script>
+        let bouton = document.getElementById('bouton');
+        bouton.disabled = true;
+
+        window.addEventListener('message', function(event) {
+            if (event.data.message === 'Modelos are trained'){
+                // console.log('Mensaje recibido del padre:', event.data);
+                bouton.disabled = false;
+            }
+            
+            // Aquí puedes agregar más código para manejar este caso
+        }, false);
+
+        window.onload = function() {
+              
+              if (bouton.disabled) {
+                bouton.title = "L'expérience sera bientôt prête.";
+              } else {
+                bouton.title = "";
+              }
+            };
+
+        function redirectToOtherPage() {
+            // Remplacez 'autrePage.html' par le nom de votre page locale
+            let mensaje = 'Accepted Instructions';
+            parent.postMessage({ message: mensaje, data: '*' }, '*');
+        }
+    </script>
+</body>
+</html>

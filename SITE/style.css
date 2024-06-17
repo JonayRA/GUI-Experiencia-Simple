@@ -8,6 +8,10 @@ canvas {
 	image-rendering: pixelated;
 }
 
+button{
+  cursor: pointer;
+}
+
 #PFDcanvasContainer {
 	position:absolute;
 	left: 50%;
