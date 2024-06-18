@@ -30,13 +30,15 @@ if (participantCS == "8"){
 
 //const QUASApositions = [1, 5, 8, 9];
 //const QUASApositions = [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90];
-imagesData = imagesData.slice(-43, -20);
+// imagesData = imagesData.slice(-63, -20);
 // Randomized:
 const QUASApositions = [1]; // [ 7,  12,  19,  26,  31,  37,  42, 49,  56,  62,  69,  76,  81,  86,  91, 97, 104, 111, 118, 125, 130, 135, 141, 148, 154, 161, 166, 173, 180];
 //const counterfactPositions = [2, 4, 6];
 const counterfactPositions = Array.from({length: 20}, (_, i) => imagesData.length - 40 + i);
+// console.log(counterfactPositions);
 const recommendationPositions = Array.from({length: 20}, (_, i) => imagesData.length - 20 + i);
 
+// console.log(imagesData.length);
 
 let PFD = document.getElementById('PFD');
 let ctxPFD = PFD.getContext('2d');
@@ -199,7 +201,9 @@ const popupNASATLX = document.getElementById('NASATLX');
 const popupTrustInAuto1 = document.getElementById('trustInAuto1');
 const popupTrustInAuto2 = document.getElementById('trustInAuto2');
 const popupEntrainement = document.getElementById('attenteEntrainement');
+const popupexplicationContrefact = document.getElementById('explicationContrefact');
 const iframePopupEntrainement = document.getElementById('iframeattenteEntrainement');
+const iframeexplicationContrefact = document.getElementById('iframeexplicationContrefact');
 const TituloFin = document.getElementById('TituloFin');
 const accepterRecommandationCS = document.getElementById('accepterRecommandationCS');
 const rejeterRecommandationCS = document.getElementById('rejeterRecommandationCS');
@@ -219,8 +223,9 @@ popupMatrizCorrelacion.style.display = 'none';
 popupNASATLX.style.display = 'none';
 popupTrustInAuto1.style.display = 'none';
 popupTrustInAuto2.style.display = 'none';
-popupFinal.style.display = '';
+popupFinal.style.display = 'none';
 popupEntrainement.style.display = 'none';
+popupexplicationContrefact.style.display = 'none';
 
 const processTracing = 0;
 let waypointChoisiInitialement = null;
@@ -856,6 +861,26 @@ async function cambiarCaso() {
     // console.log(arrayJSONSGuardar);
   }
 
+  async function waitForMessage() {
+        return new Promise((resolve) => {
+            window.addEventListener('message', (event) => {
+                if (event.data.message === 'Accepted Explication Contrefactuels') {
+                    resolve();
+                    popupexplicationContrefact.style.display = 'none';
+                }
+            });
+        });
+    }
+
+  if(currentImage == counterfactPositions[0]){
+    popupexplicationContrefact.style.display = '';
+
+    await waitForMessage();
+
+  }
+
+
+
   if(currentImage < imagesData.length){
   // imgND.src = imagenes[currentImage];
   imgND.src = imagesData[currentImage].src;
@@ -982,20 +1007,7 @@ document.addEventListener("keydown", function(event) {
 
 function calculadoraVariablesCS(currentImage,changedWaypt,Xpos,Ypos){
 
-  //console.log(imagesData[currentImage].src)
-  /*var XposWapt1 = Xwaypt1 * NDcontainerWidth;
-  var YposWapt1 = (1-Ywaypt1) * NDcontainerHeight;
-
-  //console.log('Xpos1',Xwaypt1);
-  //console.log('Ypos1',Ywaypt1)
-
-  canvasWaypt1.style.top = YposWapt1 + 'px';
-  canvasWaypt1.style.left = XposWapt1 + 'px';*/
-
-
-  // console.log(currentImage);
   if (typeof currentImage === "undefined") {
-  // console.log("No definida");
   var XjauneCS = Xjaune;
   var YjauneCS = Yjaune;
   var XrougeCS = Xrouge;
@@ -1003,7 +1015,6 @@ function calculadoraVariablesCS(currentImage,changedWaypt,Xpos,Ypos){
   var radiusRougeCS = radiusRouge;
   var radiusJauneCS = radiusJaune;
 } else {
-  // console.log("Definida");
   var XjauneCS = imagesData[currentImage].XcenterYellow;
   var YjauneCS = imagesData[currentImage].YcenterYellow;
   var XrougeCS = imagesData[currentImage].XcenterRed;
@@ -1012,55 +1023,25 @@ function calculadoraVariablesCS(currentImage,changedWaypt,Xpos,Ypos){
   var radiusJauneCS = imagesData[currentImage].radiusYellow;
   }
 
-
   var Xwaypt1CS_interface = canvasWaypt1.offsetLeft/NDcontainerWidth + 0.033/2; // Le estoy sumando el tamaño del waypt para que calcule sobre el punto central
   var Xwaypt2CS_interface = canvasWaypt2.offsetLeft/NDcontainerWidth + 0.033/2;
   var Ywaypt1CS_interface = canvasWaypt1.offsetTop / NDcontainerHeight + 0.066/2;
   var Ywaypt2CS_interface = canvasWaypt2.offsetTop / NDcontainerHeight + 0.066/2;
 
-
   var Xwaypt1CS = (Xwaypt1CS_interface + 0.141)/1.2821;
   var Xwaypt2CS = (Xwaypt2CS_interface + 0.141)/1.2821;
   var Ywaypt1CS = (Ywaypt1CS_interface - 0.0213)/1.1689;
   var Ywaypt2CS = (Ywaypt2CS_interface - 0.0213)/1.1689;
-  console.log(Ywaypt1CS);
 
-  // We need to calculate the closes waypt point
-  /*if (Xwaypt2CS > XjauneCS){
-    Xwaypt2CS_interface = Xwaypt2CS_interface - 0.033/32;
-    Xwaypt2CS = (Xwaypt2CS_interface + 0.141)/1.2821;
-  } else if (Xwaypt2CS < XjauneCS){
-    Xwaypt2CS_interface = Xwaypt2CS_interface + 0.033/32;
-    Xwaypt2CS = (Xwaypt2CS_interface + 0.141)/1.2821;
-  } 
-  if (Xwaypt1CS > XjauneCS){
-    Xwaypt1CS_interface = Xwaypt1CS_interface - 0.033/32;
-    Xwaypt1CS = (Xwaypt1CS_interface + 0.141)/1.2821;
-  } else if (Xwaypt1CS < XjauneCS){
-    Xwaypt2CS_interface = Xwaypt2CS_interface + 0.033/32;
-    Xwaypt2CS = (Xwaypt2CS_interface + 0.141)/1.2821;
-  } 
-
-  
-  if (Ywaypt2CS > YjauneCS){
-    Ywaypt2CS_interface = Ywaypt2CS_interface - 0.066/32;
-    Ywaypt2CS = (Ywaypt2CS_interface - 0.0213)/1.1689;
-  } else*/ if (Ywaypt2CS < YjauneCS){
+  if (Ywaypt2CS < YjauneCS){
     Ywaypt2CS_interface = Ywaypt2CS_interface + 0.066;
     Ywaypt2CS = (Ywaypt2CS_interface - 0.0213)/1.1689;
   }
 
-  /*if (Ywaypt1CS > YjauneCS){
-    Ywaypt1CS_interface = Ywaypt1CS_interface - 0.066/32;
-    Ywaypt1CS = (Ywaypt1CS_interface - 0.0213)/1.1689;
-  } else*/ if (Ywaypt1CS < YjauneCS){
+  if (Ywaypt1CS < YjauneCS){
     Ywaypt1CS_interface = Ywaypt1CS_interface + 0.066;
     Ywaypt1CS = (Ywaypt1CS_interface - 0.0213)/1.1689;
   }
-  
-  console.log('Wpt 1',Xwaypt1CS,Ywaypt1CS);
-  console.log('Wpt 2',Xwaypt2CS,Ywaypt2CS);
-
 
   if(changedWaypt === undefined){
 
@@ -1072,14 +1053,6 @@ function calculadoraVariablesCS(currentImage,changedWaypt,Xpos,Ypos){
     Xwaypt2CS = Xwaypt2CS + cumuloModifsX/NDcontainerWidth;
     Ywaypt2CS = Ywaypt2CS - (cumuloModifsY/NDcontainerHeight);
   }
-
-
-  console.log('Ha cambiado wpt', changedWaypt);
-  console.log('Wpt 1',Xwaypt1CS,Ywaypt1CS);
-  console.log('Wpt 2',Xwaypt2CS,Ywaypt2CS);
-
-  //console.log("Radios", radiusJauneCS, radiusRougeCS);
-	// Distancias presentes
 
 	var distJauneDessus = (parseFloat(cellAltParDessus.textContent) - parseFloat(cellAltZoneJaune.textContent))/10000;
   if (distJauneDessus < 0){
@@ -1119,18 +1092,7 @@ function calculadoraVariablesCS(currentImage,changedWaypt,Xpos,Ypos){
   // Buscamos la variable con el valor mínimo
   let var_min = Object.entries(vars).reduce((a, b) => a[1] < b[1] ? a : b)[0];
 
-
-  // console.log("Distancia minima",var_min,Math.min(distJauneDroit,distJauneRoute,distJauneGauche,distJauneDessus));
-  //console.log(imagesData[currentImage],XjauneCS,Xwaypt2CS,Yjaune,Ywaypt2CS,radiusJauneCS);
-  // console.log('Comprobar aqui,XjauneCS,YjauneCS,radiusJauneCS,XrougeCS,YrougeCS,radiusRougeCS,Xwaypt1CS,Ywaypt1CS,Xwaypt2CS,Ywaypt2CS');
-  //console.log('Comprobar aqui',XjauneCS,YjauneCS,radiusJauneCS,XrougeCS,YrougeCS,radiusRougeCS,Xwaypt1CS,Ywaypt1CS,Xwaypt2CS,Ywaypt2CS);
-  console.log('Distancias amarillas',distJauneDroit,distJauneRoute,distJauneGauche,distJauneDessus);
-  //console.log('Distancias rojas',distRougeDroit,distRougeRoute,distRougeGauche,distRougeDessus);
-	//console.log('Celdas calculadora future',cellDirCellule.textContent);
-	//console.log(cellVitesseCellule.textContent);
-  //console.log('Las putas X',Xwaypt1,Xwaypt1CS)
-	
-	let vitesse = 0;
+  let vitesse = 0;
 	if(cellVitesseCellule.textContent == 'Rapide'){
 		vitesse = 2/4;
 	}else if ( cellVitesseCellule.textContent == 'Lente'){
@@ -1185,13 +1147,45 @@ function calculadoraVariablesCS(currentImage,changedWaypt,Xpos,Ypos){
 
 	// Combustible
 	var combDisponibleCS = parseFloat(cellCombDispo.textContent);
-	var consomRouteCS = ((combDisponibleCS - parseFloat(cellConsomRoute.textContent)))/combDisponibleCS;
-	var consumptionWaypt1CS = ((combDisponibleCS - parseFloat(cellConsomWaypt1.textContent)))/combDisponibleCS;
-	var consumptionWaypt2CS = ((combDisponibleCS - parseFloat(cellConsomWaypt2.textContent)))/combDisponibleCS;
-	var consumptionDessusCS = ((combDisponibleCS - parseFloat(cellConsomDessus.textContent)))/combDisponibleCS;
+  var excessRoute = ((combDisponibleCS - parseFloat(cellConsomRoute.textContent)));
+  var excessWaypt1 = ((combDisponibleCS - parseFloat(cellConsomWaypt1.textContent)));
+  var excessWaypt2 = ((combDisponibleCS - parseFloat(cellConsomWaypt2.textContent)));
+  var excessDessus = ((combDisponibleCS - parseFloat(cellConsomDessus.textContent)));
+  
+  var distRefJaune = Math.max(distJauneGauche, distJauneDroit, distJauneRoute, distJauneDessus);
+  var distRefRouge = Math.max(distRougeGauche, distRougeDroit, distRougeRoute, distRougeDessus);
+  var futureDistRefJaune = Math.max(futureDistJauneGauche,futureDistJauneRoute,futureDistJauneDroit,distJauneDessus);
+  var futureDistRefRouge = Math.max(futureDistRougeGauche,futureDistRougeRoute,futureDistRougeDroit,distRougeDessus);
+  var combRef = Math.max(excessRoute,excessWaypt1,excessWaypt2,excessDessus);
+
+
+  var distJauneGaucheCS = 1 - (distRefJaune - distJauneGauche)/distRefJaune
+  var distJauneRouteCS = 1 - (distRefJaune - distJauneRoute)/distRefJaune
+  var distJauneDroitCS = 1 - (distRefJaune - distJauneDroit)/distRefJaune
+  var distJauneDessusCS = 1 - (distRefJaune - distJauneDessus)/distRefJaune
+
+  var distRougeGaucheCS = 1 - (distRefRouge - distRougeGauche)/distRefRouge
+  var distRougeRouteCS = 1 - (distRefRouge - distRougeRoute)/distRefRouge
+  var distRougeDroitCS = 1 - (distRefRouge - distRougeDroit)/distRefRouge
+  var distRougeDessusCS = 1 - (distRefRouge - distRougeDessus)/distRefRouge
+
+  var futureDistJauneGaucheCS = 1 - (futureDistRefJaune - futureDistJauneGauche)/futureDistRefJaune
+  var futureDistJauneRouteCS = 1 - (futureDistRefJaune - futureDistJauneRoute)/futureDistRefJaune
+  var futureDistJauneDroitCS = 1 - (futureDistRefJaune - futureDistJauneDroit)/futureDistRefJaune
+  var futureDistJauneDessusCS = 1 - (futureDistRefJaune - distJauneDessus)/futureDistRefJaune
+
+  var futureDistRougeGaucheCS = 1 - (futureDistRefRouge - futureDistRougeGauche)/futureDistRefRouge
+  var futureDistRougeRouteCS = 1 - (futureDistRefRouge - futureDistRougeRoute)/futureDistRefRouge
+  var futureDistRougeDroitCS = 1 - (futureDistRefRouge - futureDistRougeDroit)/futureDistRefRouge
+  var futureDistRougeDessusCS = 1 - (futureDistRefRouge - distRougeDessus)/futureDistRefRouge
+
+  var consomRouteCS = ((excessRoute))/combRef;
+  var consumptionWaypt1CS = ((excessWaypt1))/combRef;
+  var consumptionWaypt2CS = ((excessWaypt2))/combRef;
+  var consumptionDessusCS = ((excessDessus))/combRef;
 
    
-  var distJauneDroitCS = distJauneDroit/Math.sqrt(2);
+  /*var distJauneDroitCS = distJauneDroit/Math.sqrt(2);
   var distJauneGaucheCS = distJauneGauche/Math.sqrt(2);
   var distJauneRouteCS = distJauneRoute/Math.sqrt(2);
   var distRougeDroitCS = distRougeDroit/Math.sqrt(2);
@@ -1202,29 +1196,32 @@ function calculadoraVariablesCS(currentImage,changedWaypt,Xpos,Ypos){
   var futureDistRougeRouteCS = futureDistRougeRoute/Math.sqrt(2);
   var futureDistJauneDroitCS = futureDistJauneDroit/Math.sqrt(2);
   var futureDistRougeGaucheCS = futureDistRougeGauche/Math.sqrt(2);
-  var futureDistRougeRouteCS = futureDistRougeRoute/Math.sqrt(2);
+  var futureDistRougeRouteCS = futureDistRougeRoute/Math.sqrt(2);*/
 	
 
 	let feautresRequest
-	return feautresRequest =  {features: {
+
+  // console.log(feautresRequest);
+	//return feautresRequest =  {features: {
+  feautresRequest =  {features: {
   	"Consommation dessus": consumptionDessusCS,
   	"Consommation droite": consumptionWaypt2CS,
   	"Consommation gauche": consumptionWaypt1CS,
   	"Consommation route": consomRouteCS,
-  	"Dist jaune-dessus": distRougeDessus,
-  	"Dist jaune-droite": distJauneDroit,
-  	"Dist jaune-gauche": distJauneGauche,
-  	"Dist jaune-route": distJauneRoute,
-  	"Dist rouge-dessus": distRougeDessus,
-  	"Dist rouge-droite": distRougeDroit,
-  	"Dist rouge-gauche": distRougeGauche,
-  	"Dist rouge-route": distRougeRoute,
-  	"Future dist jaune-droite": futureDistJauneDroit,
-  	"Future dist jaune-gauche": futureDistJauneGauche,
-  	"Future dist jaune-route": futureDistRougeRoute,
-  	"Future dist rouge-droite": futureDistJauneDroit,
-  	"Future dist rouge-gauche": futureDistRougeGauche,
-  	"Future dist rouge-route": futureDistRougeRoute
+  	"Dist jaune-dessus": distRougeDessusCS,
+  	"Dist jaune-droite": distJauneDroitCS,
+  	"Dist jaune-gauche": distJauneGaucheCS,
+  	"Dist jaune-route": distJauneRouteCS,
+  	"Dist rouge-dessus": distRougeDessusCS,
+  	"Dist rouge-droite": distRougeDroitCS,
+  	"Dist rouge-gauche": distRougeGaucheCS,
+  	"Dist rouge-route": distRougeRouteCS,
+  	"Future dist jaune-droite": futureDistJauneDroitCS,
+  	"Future dist jaune-gauche": futureDistJauneGaucheCS,
+  	"Future dist jaune-route": futureDistRougeRouteCS,
+  	"Future dist rouge-droite": futureDistJauneDroitCS,
+  	"Future dist rouge-gauche": futureDistRougeGaucheCS,
+  	"Future dist rouge-route": futureDistRougeRouteCS
     /*"Consommation dessus": consumptionDessusCS,
     "Consommation droite": consumptionWaypt2CS,
     "Consommation gauche": consumptionWaypt1CS,
@@ -1244,15 +1241,14 @@ function calculadoraVariablesCS(currentImage,changedWaypt,Xpos,Ypos){
     "Future dist rouge-gauche": futureDistRougeGaucheCS,
     "Future dist rouge-route": futureDistRougeRouteCS*/
   }};
-
+  //console.log(feautresRequest);
+  return feautresRequest;
   
-
-
 }
 
 function calculadoraVariablesCSordrePreference(currentImage,changedWaypt,Xpos,Ypos){
 
-    var Xwaypt1CS_interface = canvasWaypt1.offsetLeft/NDcontainerWidth + 0.033; // Le estoy sumando el tamaño del waypt para que calcule sobre el punto central
+  var Xwaypt1CS_interface = canvasWaypt1.offsetLeft/NDcontainerWidth + 0.033; // Le estoy sumando el tamaño del waypt para que calcule sobre el punto central
   var Xwaypt2CS_interface = canvasWaypt2.offsetLeft/NDcontainerWidth + 0.033;
   var Ywaypt1CS_interface = canvasWaypt1.offsetTop / NDcontainerHeight + 0.066;
   var Ywaypt2CS_interface = canvasWaypt2.offsetTop / NDcontainerHeight + 0.066;

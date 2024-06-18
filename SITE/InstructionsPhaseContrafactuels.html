@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Bienvenue</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            padding: 0;
+            background-color: #f0f0f0;
+            font-size: 22px;
+        }
+
+        .container {
+            /*display: flex;*/
+            /*margin-top: 40px;*/
+            /*justify-content: center;*/
+            align-items: center;
+            height: 100vh;
+        }
+
+        .welcome-text {
+            margin-top: 1000px;
+            font-size: 2em;
+            color: #333;
+        }
+
+        .welcome-button {
+            /*margin-top: 20px;
+            margin-left: 70px;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;*/
+            margin-bottom: 40px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .welcome-button:disabled {
+            background-color: #ccc; /* change la couleur de fond lorsque le bouton est désactivé */
+            cursor: not-allowed; /* change le curseur lorsque le bouton est désactivé */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div>
+            <!--<div class="welcome-text">Bienvenue à l'expérience!</div>-->
+            <div><p>Dans les situations qui suivent, une fois que vous aurez choisi votre réponse, l'écran illustré dans l'image ci-dessous s’affichera en vous demandant quelle serait, pour vous, la deuxième meilleure option (choix) pour la même situation. <img src="IMAGENES/selectionDeuxiemeOption.png" style="margin-top: 20px"></p>
+                <p> Vous pourrez choisir parmi les trois options que vous n’avez pas choisies. Dans l’exemple affiché l’option choisie était « Ne pas se dévier », ainsi les options pour le deuxième choix sont « Option 1 », « Option 2 » et « Par-dessus ». </p>
+                <p> Si vous voulez voir à nouveau la situation pour choisir votre deuxième option, vous pouvez cliquer sur le bouton « Remontrer la situation ». </p>
+                <p>Une fois vous aurez choisi votre deuxième meilleure option l'écran illustré ci-dessous s’affichera à nouveau. L’objectif dans cet écran c’est de modifier le facteur qui vous ferait préférer votre deuxième option, c’est-à-dire, qu’elle devient votre première option.</p> 
+                <p> Dans les tableaux vous pouvez modifier les cellules en vert. Pour ce faire, veuillez cliquer sur la cellule que vous souhaitez modifier et introduire la valeur que vous considérez appropriée.</p>
+                <p>Lorsqu’ils sont affichés en vert, vous pouvez aussi déplacer les losanges des options 1 et 2. Veuillez cliquer dessus et maintenir le bouton de la souris enfoncé pour le déplacer.</p> 
+                <p> Si vous n’êtes pas satisfait.e du changement fait ou voulez évaluer d’autres changements avant de prendre une décision, veuillez cliquer sur ce bouton pour récupérer la situation originale et pouvoir modifier une autre variable. </p>
+                <p> Une fois vous serez satisfait.e avec la nouvelle situation affichée, c’est-à-dire, votre deuxième option deviendrait la première, veuillez cliquer sur ce bouton pour passer au cas suivant. <img src="IMAGENES/productionContrefactuel.png" style="margin-top: 20px"></p>
+                </div>
+
+            <button class="welcome-button" id = "bouton" onclick="redirectToOtherPage()">Cliquez ici pour continuer</button>
+        </div>
+    </div>
+
+    <script>
+        let bouton = document.getElementById('bouton');
+        bouton.disabled = false;
+
+        window.addEventListener('message', function(event) {
+            if (event.data.message === 'Modelos are trained'){
+                // console.log('Mensaje recibido del padre:', event.data);
+                bouton.disabled = false;
+            }
+            
+            // Aquí puedes agregar más código para manejar este caso
+        }, false);
+
+        window.onload = function() {
+              
+              if (bouton.disabled) {
+                bouton.title = "L'expérience sera bientôt prête.";
+              } else {
+                bouton.title = "";
+              }
+            };
+
+        function redirectToOtherPage() {
+            // Remplacez 'autrePage.html' par le nom de votre page locale
+            let mensaje = 'Accepted Explication Contrefactuels';
+            parent.postMessage({ message: mensaje, data: '*' }, '*');
+        }
+    </script>
+</body>
+</html>
