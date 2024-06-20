@@ -32,7 +32,9 @@ if (participantCS == "8"){
 //const QUASApositions = [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90];
 // imagesData = imagesData.slice(-63, -20);
 // Randomized:
-const QUASApositions = [1]; // [ 7,  12,  19,  26,  31,  37,  42, 49,  56,  62,  69,  76,  81,  86,  91, 97, 104, 111, 118, 125, 130, 135, 141, 148, 154, 161, 166, 173, 180];
+imagesData = imagesData.slice(0, 150);
+console.log(imagesData.length)
+const QUASApositions = []; // [ 7,  12,  19,  26,  31,  37,  42, 49,  56,  62,  69,  76,  81,  86,  91, 97, 104, 111, 118, 125, 130, 135, 141, 148, 154, 161, 166, 173, 180];
 //const counterfactPositions = [2, 4, 6];
 const counterfactPositions = Array.from({length: 20}, (_, i) => imagesData.length - 40 + i);
 // console.log(counterfactPositions);
@@ -317,8 +319,9 @@ cellConsomWaypt2.textContent = imagesData[currentImage].consumptionWaypt2;
 //cellTempsWaypt1.textContent = imagesData[currentImage].tempsWaypt1;
 //cellTempsRoute.textContent = imagesData[currentImage].tempsroute;
 //cellTempsWaypt2.textContent = imagesData[currentImage].tempsWaypt2;
-var combDisponible = imagesData[currentImage].consumptionRoute * 1.20;
-cellCombDispo.textContent = combDisponible;
+/*var combDisponible = imagesData[currentImage].consumptionRoute * 1.20;
+cellCombDispo.textContent = combDisponible;*/
+cellCombDispo.textContent = imagesData[currentImage].combustDispo;
 cellConsomDessus.textContent = imagesData[currentImage].consumptionDessus;
 //cellTempsDessus.textContent = imagesData[currentImage].tempsDessus;
 // cellAltZoneVerte.textContent = imagesData[currentImage].altZoneVerte;
@@ -814,20 +817,36 @@ async function cambiarCaso() {
 
   if(currentImage == recommendationPositions[0]){
     popupEntrainement.style.display = '';
-    let arrayJSONSentrainement = arrayJSONSGuardar;
+    // let arrayJSONSentrainement = arrayJSONSGuardar;
+    let uniqueCasSet = new Set();
+    let arrayJSONSentrainement1 = [];
+
+    for (let item of arrayJSONSGuardar) {
+        if (!uniqueCasSet.has(item.Cas)) {
+            uniqueCasSet.add(item.Cas);
+            arrayJSONSentrainement1.push(item);
+        }
+    }
+
+    let arrayJSONSentrainement;
 
     if(conditionPetiteXP == 1){
 
-      arrayJSONSentrainement = arrayJSONSGuardar.slice(0,-40);
+      arrayJSONSentrainement = arrayJSONSentrainement1.slice(0,-20);
 
     }else if(conditionPetiteXP == 2){
 
-      let part1 = arrayJSONSGuardar.slice(0,-60);
-      let part2 = arrayJSONSGuardar.slice(-40)
+      let part1 = arrayJSONSentrainement1.slice(0,-40);
+      let part2 = arrayJSONSentrainement1.slice(-20)
 
       arrayJSONSentrainement = part1.concat(part2);
+      arrayJSONSentrainement = arrayJSONSentrainement.concat(arrayJSONSContrafactual)
 
-    }
+    }else if(conditionPetiteXP == 3){
+      console.log('Entra en petite XP');
+
+     arrayJSONSentrainement = arrayJSONSentrainement1.concat(arrayJSONSContrafactual);
+  }
 
     // condition = 2;
     session = 2;
@@ -890,8 +909,9 @@ async function cambiarCaso() {
   // cellTempsWaypt1.textContent = imagesData[currentImage].tempsWaypt1;
   // cellTempsRoute.textContent = imagesData[currentImage].tempsroute;
   // cellTempsWaypt2.textContent = imagesData[currentImage].tempsWaypt2;
-  var combDisponible = imagesData[currentImage].consumptionRoute * 1.20;
-  cellCombDispo.textContent = combDisponible;
+  /*var combDisponible = imagesData[currentImage].consumptionRoute * 1.20;
+  cellCombDispo.textContent = combDisponible;*/
+  cellCombDispo.textContent = imagesData[currentImage].combustDispo
   cellConsomDessus.textContent = imagesData[currentImage].consumptionDessus;
 	// cellTempsDessus.textContent = imagesData[currentImage].tempsDessus;
 	// cellAltZoneVerte.textContent = imagesData[currentImage].altZoneVerte;
@@ -2414,7 +2434,7 @@ buttonParDessus.addEventListener('click', async function(){
         if(QUASApositions.includes(currentImage)){
         getQUASA();
         }
-			if (condition == 3 && session ==1){
+			if (condition == 3 && session ==1 && counterfactPositions.includes(currentImage)){
 			selectionDeuxiemeOption(waypointChoisi);
 		}else if (condition != 3 || (condition == 3 && session != 1) || (condition == 3 && session == 1 && !counterfactPositions.includes(currentImage))){
 				ajouterDonneesEnregistrer();
@@ -2779,7 +2799,8 @@ async function saveData2(ArrayJSONS){
   }
 
   // Agregar un evento de clic al botón
-  boutonFin.addEventListener('click', continuar);
+  // boutonFin.addEventListener('click', continuar);
+  continuar();
 
 
   
@@ -2817,7 +2838,7 @@ async function saveData2(ArrayJSONS){
 
 
 
-	if(condition == 3 && session == 1){ // && counterfactPositions.includes(currentImage)){
+	if(true){ //condition == 3 && session == 1){ // && counterfactPositions.includes(currentImage)){
 	localStorage.setItem("Counterfactuals", JSON.stringify(arrayJSONSContrafactual));
 
 
