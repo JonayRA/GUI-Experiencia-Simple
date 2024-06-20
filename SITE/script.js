@@ -32,7 +32,7 @@ if (participantCS == "8"){
 //const QUASApositions = [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90];
 // imagesData = imagesData.slice(-63, -20);
 // Randomized:
-imagesData = imagesData.slice(0, 150);
+imagesData = imagesData.slice(0, 170);
 console.log(imagesData.length)
 const QUASApositions = []; // [ 7,  12,  19,  26,  31,  37,  42, 49,  56,  62,  69,  76,  81,  86,  91, 97, 104, 111, 118, 125, 130, 135, 141, 148, 154, 161, 166, 173, 180];
 //const counterfactPositions = [2, 4, 6];
