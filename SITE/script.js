@@ -32,14 +32,17 @@ if (participantCS == "8"){
 //const QUASApositions = [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90];
 // imagesData = imagesData.slice(-63, -20);
 // Randomized:
-imagesData = imagesData.slice(0, 170);
+//imagesData = imagesData.slice(0, 170);
+imagesData = imagesData.slice(0, 150);
+imagesData = imagesData.slice(-20);
 console.log(imagesData.length)
 const QUASApositions = []; // [ 7,  12,  19,  26,  31,  37,  42, 49,  56,  62,  69,  76,  81,  86,  91, 97, 104, 111, 118, 125, 130, 135, 141, 148, 154, 161, 166, 173, 180];
 //const counterfactPositions = [2, 4, 6];
 const counterfactPositions = Array.from({length: 20}, (_, i) => imagesData.length - 40 + i);
 // console.log(counterfactPositions);
 const recommendationPositions = Array.from({length: 20}, (_, i) => imagesData.length - 20 + i);
-
+console.log(recommendationPositions)
+session = 2;
 // console.log(imagesData.length);
 
 let PFD = document.getElementById('PFD');
@@ -2787,27 +2790,28 @@ async function saveData2(ArrayJSONS){
 
   // Función que se ejecutará cuando se haga clic en el botón
   async function continuar() {
-      // Espera al clic del botón
-      await new Promise(resolve => {
-          boutonFin.addEventListener('click', () => {
-              resolve(); // Resuelve la promesa cuando se hace clic en el botón
-          });
-      });
+        // Espera al clic del botón
+        await new Promise(resolve => {
+            boutonFin.addEventListener('click', () => {
+                resolve(); // Resuelve la promesa cuando se hace clic en el botón
+            }, { once: true }); // El { once: true } asegura que el evento se maneje una sola vez
+        });
 
-      // Aquí puedes agregar el código que deseas ejecutar después de hacer clic en el botón
-      console.log('Se hizo clic en el botón. Continuando...');
-  }
+        // Aquí puedes agregar el código que deseas ejecutar después de hacer clic en el botón
+        console.log('Se hizo clic en el botón. Continuando...');
+        
+        await ejecutarCodigoDespuesDelBoton();
+        // Aquí puedes agregar más código que deseas ejecutar después del clic
+    }
 
-  // Agregar un evento de clic al botón
-  // boutonFin.addEventListener('click', continuar);
-  continuar();
-
+    // Llamar a la función continuar para empezar la espera
+  
 
   
 
 	//await esperarXSegundos(2);
 
-	
+	 async function ejecutarCodigoDespuesDelBoton() {
 
 	localStorage.setItem('participant'+numParticipant+'_session'+session+'condition'+condition, JSON.stringify(ArrayJSONS));
 	localStorage.setItem('participant'+numParticipant+'_session'+session+'condition'+condition+'QUASA', JSON.stringify(arrayJSONSQUASA))
@@ -2868,6 +2872,11 @@ async function saveData2(ArrayJSONS){
 	}
 	await esperarXSegundos(5);
 	TituloFin.textContent = 'Merci de votre participation';
+
+}
+
+
+  continuar();
 }
 
 buttonFinirExperience.addEventListener('click', function(){
