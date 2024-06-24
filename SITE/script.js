@@ -34,7 +34,7 @@ if (participantCS == "8"){
 // Randomized:
 //imagesData = imagesData.slice(0, 170);
 imagesData = imagesData.slice(0, 150);
-imagesData = imagesData.slice(-20);
+imagesData = imagesData.slice(-22);
 console.log(imagesData.length)
 const QUASApositions = []; // [ 7,  12,  19,  26,  31,  37,  42, 49,  56,  62,  69,  76,  81,  86,  91, 97, 104, 111, 118, 125, 130, 135, 141, 148, 154, 161, 166, 173, 180];
 //const counterfactPositions = [2, 4, 6];
@@ -42,7 +42,7 @@ const counterfactPositions = Array.from({length: 20}, (_, i) => imagesData.lengt
 // console.log(counterfactPositions);
 const recommendationPositions = Array.from({length: 20}, (_, i) => imagesData.length - 20 + i);
 console.log(recommendationPositions)
-session = 2;
+// session = 2;
 // console.log(imagesData.length);
 
 let PFD = document.getElementById('PFD');
@@ -1833,7 +1833,7 @@ buttonOption1.addEventListener('click', async function () {
       /*if (recomendacionCS == 1){
           recommendation = 'l\'option 1';
         } else*/
-        if (recomendacionCS != waypointChoisi){
+        if (recomendacionCS != waypointChoisi && recomendacionCS < 4){
         if (recomendacionCS == 2){
           recommendation = 'l\'option 2';
         } else if (recomendacionCS == 3) {
@@ -1990,7 +1990,7 @@ buttonOption2.addEventListener('click', async function () {
             // console.log('data', data, data.predictions, typeof data.predictions)
         })*/
       
-      if(recomendacionCS !=waypointChoisi){
+      if(recomendacionCS !=waypointChoisi && recomendacionCS < 4){
       if (recomendacionCS == 1){
           recommendation = 'l\'option 1';
         /*} else if (recomendacionCS == 2){
@@ -2289,7 +2289,7 @@ buttonsansChangement.addEventListener('click', async function(){
     		})*/
 			
 			console.log(recomendacionCS, typeof recomendacionCS)
-			if(recomendacionCS !=waypointChoisi){
+			if(recomendacionCS !=waypointChoisi && recomendacionCS < 4){
 			if (recomendacionCS == 1){
     			recommendation = 'l\'option 1';
     		} else if (recomendacionCS == 2){
@@ -2381,7 +2381,7 @@ buttonParDessus.addEventListener('click', async function(){
     		})*/
 			
 			console.log(recomendacionCS, typeof recomendacionCS)
-			if(recomendacionCS !=waypointChoisi){
+			if(recomendacionCS !=waypointChoisi && recomendacionCS < 4){
 			if (recomendacionCS == 1){
     			recommendation = 'l\'option 1';
     		} else if (recomendacionCS == 2){
