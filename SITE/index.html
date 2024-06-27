@@ -13,7 +13,7 @@
         <label for="numParticipantCS"> Numéro participant CS:</label>
         <input type="number" id="numParticipantCS1" name="numParticipantCS"><br><br>
 
-        <label for="numParticipantCS2"> Numéro participant CS2:</label>
+        <label for="numParticipantCS2" id="labelnumParticipantCS2"> Numéro participant CS2:</label>
         <input type="number" id="numParticipantCS2" name="numParticipantCSdeux"><br><br>
 
         <label for="session">Session:</label>
@@ -40,6 +40,11 @@
         const enlaceBoton = document.getElementById('enlaceBoton');
         const sessionInput = document.getElementById("session1");
         const conditionInput = document.getElementById("condition1");
+        const participantInput = document.getElementById("numParticipant1");
+        document.getElementById('labelnumParticipantCS2').style.display = 'none';
+        document.getElementById('numParticipantCS2').style.display = 'none';
+
+        const arrayCondsPetiteXP = [2, 2, 2, 1, 1, 1, 1, 2, 2, 1, 2, 1, 1, 1, 2, 2, 1, 2, 2, 1, 2, 1, 1, 2, 1, 1, 1, 1, 2, 1, 2, 1, 2, 2, 2, 2, 2, 1, 1, 1, 2, 2, 2, 2, 1, 2, 1, 2, 1, 1];
 
         sessionInput.addEventListener("input", function() {
             const value = parseInt(sessionInput.value);
@@ -85,7 +90,8 @@
 
 
 
-            window.location.href = "contrafactual.html?numParticipant=" + encodeURIComponent(numParticipant) + "&condition=" + encodeURIComponent(condition) + "&session=" + encodeURIComponent(session) + "&numParticipantCS=" + encodeURIComponent(numParticipantCS) + "&numParticipantCS2=" + encodeURIComponent(numParticipantCSdeux) + "&conditionPetiteXP=" + encodeURIComponent(conditionPetiteXP); 
+            //window.location.href = "contrafactual.html?numParticipant=" + encodeURIComponent(numParticipant) + "&condition=" + encodeURIComponent(condition) + "&session=" + encodeURIComponent(session) + "&numParticipantCS=" + encodeURIComponent(numParticipantCS) + "&numParticipantCS2=" + encodeURIComponent(numParticipantCSdeux) + "&conditionPetiteXP=" + encodeURIComponent(conditionPetiteXP); 
+            window.location.href = "questionnaireSocioDemo.html?numParticipant=" + encodeURIComponent(numParticipant) + "&condition=" + encodeURIComponent(condition) + "&session=" + encodeURIComponent(session) + "&numParticipantCS=" + encodeURIComponent(numParticipantCS) + "&numParticipantCS2=" + encodeURIComponent(numParticipantCSdeux) + "&conditionPetiteXP=" + encodeURIComponent(conditionPetiteXP); 
         } else {
             alert("Assurez-vous d'avoir signé le consentement informé");
         }

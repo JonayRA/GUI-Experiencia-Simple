@@ -2784,6 +2784,7 @@ async function saveData2(ArrayJSONS){
 
   const boutonFin = document.createElement('button');
   boutonFin.textContent = 'Bouton pour l\'expérimentateur';
+  boutonFin.classList.add('boutonFin'); 
 
   // Agregar el botón al contenedor
   divFinal.appendChild(boutonFin);
@@ -2792,6 +2793,8 @@ async function saveData2(ArrayJSONS){
   async function continuar() {
         // Espera al clic del botón
         await new Promise(resolve => {
+
+
             boutonFin.addEventListener('click', () => {
                 resolve(); // Resuelve la promesa cuando se hace clic en el botón
             }, { once: true }); // El { once: true } asegura que el evento se maneje una sola vez

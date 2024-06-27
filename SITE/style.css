@@ -650,7 +650,17 @@ label[for="nivelConfiance"] {
     padding: 5px;
 }
 
+#popupFinal {
+    position: absolute; /* Asegura que el posicionamiento sea relativo al contenedor */
+    /* Otros estilos específicos para tu popup, como tamaño, fondo, etc. */
+}
 
+.boutonFin {
+    position: absolute; /* Posiciona el botón de forma absoluta dentro del contenedor */
+    bottom: 0; /* Ajusta según tu preferencia (puede ser top, left, right) */
+    right: 0; /* Ajusta según tu preferencia (puede ser top, left, right) */
+    /* Otros estilos para el botón (tamaño, color, etc.) */
+}
 /*.botones {
     display: flex;
     flex-wrap: wrap;
