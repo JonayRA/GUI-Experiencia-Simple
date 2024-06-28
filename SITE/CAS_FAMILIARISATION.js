@@ -271,8 +271,8 @@ function hideButtonsContrefacutel(){
 	buttontoggleButton.style.display = 'none';
 	inputVariableChoisie.style.display = 'none';
 	buttonsansChangement.style.display = '';
-  buttonOption1.style.display = '';
-  buttonOption2.style.display = '';
+  	buttonOption1.style.display = '';
+  	buttonOption2.style.display = '';
 	textInputVar.value = null;
 	buttonFinirExperience.style.display = 'none';
 	buttonParDessus.style.display = '';
@@ -999,7 +999,8 @@ indicadorNumeroCaso.textContent = casoNumeroTexto;
   canvasAvionNDX = 0;
   canvasAvionNDY = 0;*/
 }else if (currentImage == imagesData.length){ // && session == 1){
-	popupMatrizCorrelacion.style.display = '';
+	window.location.href = "commencementXP.html?numParticipant=" + encodeURIComponent(numParticipant) + "&condition=" + encodeURIComponent(condition) + "&session=" + encodeURIComponent(session) + "&numParticipantCS=" + encodeURIComponent(participantCS) + "&numParticipantCS2=" + encodeURIComponent(participantCS2) + "&conditionPetiteXP=" + encodeURIComponent(conditionPetiteXP);
+	//popupMatrizCorrelacion.style.display = '';
 }else if (currentImage == imagesData.length && session != 1){
 	popupNASATLX.style.display='';
 }

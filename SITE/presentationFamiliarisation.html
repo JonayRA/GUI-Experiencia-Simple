@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Instructions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            padding: 0;
+            background-color: #f0f0f0;
+            font-size: 20px;
+        }
+
+        .container {
+           /* display: flex;
+            flex-direction: column;
+            justify-content: center;*/
+            align-items: center;
+            height: 100vh;
+            /*overflow-y: auto; /* Permite el desplazamiento vertical */
+            /*padding: 20px; /* Añade un poco de espacio alrededor del contenido */
+        /*}*/
+
+        .welcome-text {
+            font-size: 2em;
+            color: #333;
+        }
+
+        .instructions {
+            margin-top: 20px;
+            text-align: justify;
+        }
+
+        .welcome-button {
+            margin-top: 20px;
+            margin-bottom: 40px;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="welcome-text">Instructions</div>
+        <div class="instructions">
+            <p>Vous avez complété la phase de familiarisation, ensuite, l'expérimentateur quittera la salle et vous débuterez la tâche.</p>
+        </div>
+        <button class="welcome-button" onclick="redirectToOtherPage()">Commencer</button>
+    </div>
+
+    <script>
+        var urlParams = new URLSearchParams(window.location.search);
+        const numParticipant = urlParams.get("numParticipant");
+        var condition = urlParams.get("condition");
+        var session = urlParams.get("session");
+        const participantCS = urlParams.get("numParticipantCS");
+        console.log(participantCS);
+        const participantCS2 = urlParams.get("numParticipantCS2");
+        const nombreDeCasContrefactuels = 20;
+        const conditionPetiteXP = urlParams.get("conditionPetiteXP");
+        function redirectToOtherPage() {
+            // Remplacez 'autrePage.html' par le nom de votre page locale
+            window.location.href = "FAMILIARIZACION_HTML.html?numParticipant=" + encodeURIComponent(numParticipant) + "&condition=" + encodeURIComponent(condition) + "&session=" + encodeURIComponent(session) + "&numParticipantCS=" + encodeURIComponent(participantCS) + "&numParticipantCS2=" + encodeURIComponent(participantCS2) + "&conditionPetiteXP=" + encodeURIComponent(conditionPetiteXP);
+        }
+    </script>
+</body>
+</html>
