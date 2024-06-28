@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+  	<meta charset="UTF-8">
+    <title id="Titulo"> Familiarization </title>
+    <!--<h1> Test interface cellule orageuse </h1>-->
+   	<link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+  	<div id="PFDcanvasContainer", style="width: 600px; height: 600px;">
+  		<canvas id="PFD", style="image-rendering: pixelated; width: 600px; height: 600px;"></canvas>
+  		<canvas id="FMA1", style="image-rendering: pixelated;"></canvas>
+		<canvas id="FMA2", style="image-rendering: pixelated;"></canvas>
+		<canvas id="FMA3", style="image-rendering: pixelated;"></canvas>
+		<canvas id="FMA4", style="image-rendering: pixelated;"></canvas>
+		<canvas id="FMA5", style="image-rendering: pixelated;"></canvas>
+		<canvas id="ASI", width="276" height="1308", style="image-rendering: pixelated;"></canvas>
+		<canvas id="VSI", width="117.6" height="1476", style="image-rendering: pixelated;"></canvas>
+		<!--<canvas id="VSItext", style="image-rendering: pixelated;"></canvas>-->
+		<canvas id="ALT", width="225.6" height="1308", style="image-rendering: pixelated;"></canvas>
+		<canvas id="HDG", style="image-rendering: pixelated;"></canvas>
+		<canvas id="AH", style="image-rendering: pixelated;"></canvas>
+		<canvas id="pressure", style="image-rendering: pixelated;"></canvas>
+		<canvas id="NAVPFD", style="image-rendering: pixelated;"></canvas>
+		<canvas id="altIndicator", style="image-rendering: pixelated;"></canvas>
+  	</div>
+  	<button id="option1">Option 1</button>
+  	<button id="option2">Option 2</button>
+  	<button id="sansChangement">Ne pas se dévier</button>
+  	<button id="resetCase">Réinitialiser le cas</button>
+	<button id="cambiarImagen">Vue en altitude</button>
+	<button id="soumettreContrefactuel">Soumettre le changement</button>
+	<button id="eviterDessus">Par dessus</button>
+	<button id="finirExperience">Finir l'expérience</button>
+	<button id = "retourDeuxiemeOption"> Retourner pour choisir la deuxième option </button>
+	<!--<div id="popupFinal" class="popup"><h1 id="TituloFin"> Veuillez cliquer sur enregistrer</h1></div>-->
+	<div id="popupFinal" class="popup">
+		<div>
+			<p>
+    <h1 id="TituloFin">Merci de votre participation.</h1>
+    <br />
+</p>
+    	<p>
+    		<br />
+    <h1 id="tituloFin2"> Veuillez indiquer à l'expérimentateur que vous avex fini l'expérience.</h1>
+</p>
+	</div>
+</div>
+	<div id="popup" class="popup">
+
+
+  	<h2>Quelle serait votre deuxième option ?</h2>
+
+  	<div>
+  		<p>  		</p>
+  	<button id="opcionA" style="margin-right: 10px;"></button>
+ 	<button id="opcionB" style="margin-right: 10px;"></button>
+ 	<button id="opcionC" style="margin-right: 10px;"></button>
+ 	<button id="montrerSituation" style="margin-right: 10px;">Remontrer la situation</button>
+ 	</div>
+
+	</div>
+
+	<div id="QUASA" class="popup">
+
+  	<h2 id="QUASAstatementPlaceholder"> QUASA statement goes here </h2>
+
+  	<div>
+  		<p>  		</p>
+  	<button id="Vrai" style="margin-right: 10px; font-size: 16px;">Vrai</button>
+ 	<button id="Faux" style="margin-right: 10px;font-size: 16px;">Faux</button>
+
+ 	</div>
+	<div class="texto">
+        <p>Niveau de confiance:</p>
+    </div>
+ 	<div id="contenedorNivelConfianza">
+    <!--<label for="nivelConfiance">Confiance:</label>
+    <input type="range" id="nivConfiance" name="nivelConfiance" min="1" max="5" step="1" value="3">
+    
+    <output for="nivelConfianza" id="valorNivelConfiance">Neutral</output>
+    <p> </p>-->
+
+    
+
+    <div class="botones">
+        <!-- Aquí se agregarán los botones -->
+    </div>
+ 	</div>
+
+ 	<button id="acceptQUASA" style="margin-top: 25px; font-size: 16px;">Accepter</button>
+
+	</div>
+	
+	<div class="dropdown">
+  <button id="toggleButton">
+    <span id="selectedOption">Autres facteurs</span>
+  </button>
+  <ul id="menu">
+  	<li>Autres facteurs</li>
+  	<li>Intensité de la cellule</li>
+    <li>Temps</li>
+    <li>Consommation</li>
+    <!--<li>Option 3</li>-->
+  </ul>
+</div>
+<!--<div id="inputVariableChoisie"></div>-->
+<div id="inputVariableChoisie"> <input type="text" id="input-text" placeholder="Valeur" class = "inputClass"> </div>
+
+
+
+
+
+  	<div id="NDcanvasContainer", style="width: 600px; height: 600px;">
+		<!--<canvas id="ND", style="image-rendering: pixelated; width: 600px; height: 600px;"></canvas> -->
+	<!-- Création des sections du FMA (Flight Mode Annunciator) -->
+		<canvas id="ND", style="image-rendering: pixelated;"></canvas>
+
+		<canvas id="avionND", style="image-rendering: pixelated;"></canvas>
+		<canvas id="waypt1", width="120" height="240", style="image-rendering: pixelated;"></canvas>
+		<canvas id="waypt2", width="120" height="240", style="image-rendering: pixelated;"></canvas>
+		<canvas id="notificationBoxCS", width="1300", height="354", style="image-rendering: pixelated;"></canvas>
+		<button id="accepterRecommandationCS">Accepter</button>
+		<button id="rejeterRecommandationCS">Rejeter</button>
+		<!--<canvas id="FMAND2", style="image-rendering: pixelated;"></canvas>
+		<canvas id="FMAND3", style="image-rendering: pixelated;"></canvas>
+		<canvas id="FMAND4", style="image-rendering: pixelated;"></canvas>
+		<canvas id="FMAND5", style="image-rendering: pixelated;"></canvas> -->
+	</div>
+
+	<!--<table id="tableVariables"> <tr> <th> </th> <th>Ne pas se dévier</th> <th>Option 1</th> <th>Option 2</th> <th>Par dessus</th> </tr> <tr> <td>Consommation</td> <td id="consomRoute">1000</td> <td id="consomWaypt1">2000</td> <td id="consomWaypt2">3000</td> <td id="consomDessus">1000</td> </tr> <tr> <td>Temps</td> <td id="tempsRoute">8</td> <td id="tempsWaypt1">8.5</td> <td id="tempsWaypt2">7.8</td> <td id="tempsDessus">9</td> </tr> <tr id="filaCombDispo"> <td colspan="1"> Combustible disponible </td> <td colspan="4" id="combDispo">25</td> </tr> </table>-->
+
+	<table id="tableVariables" class = "table"> <tr> <th> </th> <th>Ne pas se dévier</th> <th>Option 1</th> <th>Option 2</th> <th>Par dessus</th> </tr> <tr> <td class = 'NotValue'>Consommation</td> <td id="consomRoute" class = "celda">1000</td> <td id="consomWaypt1" class = "celda">2000</td> <td id="consomWaypt2" class = "celda">3000</td> <td id="consomDessus" class = "celda">1000</td> </tr> <tr id="filaCombDispo"> <td colspan="1" class = "celda NotValue"> Combustible disponible </td> <td colspan="4" id="combDispo" class = "celda">25</td> </tr> </table>
+
+	<!--<table id="tableALTCellule"> <tr> <th> </th> <th>Zone verte</th> <th>Zone jaune</th> <th>Zone rouge</th> <th>Par dessus</th> </tr> <tr> <td>Altitude</td> <td id="altZoneVerte">1000</td> <td id="altZoneJaune">2000</td> <td id="altZoneRouge">3000</td> <td id="altParDessus">1000</td> </tr> </table>-->
+
+	<table id="tableALTCellule" class = "table"> <tr> <th> </th> <th>Zone jaune</th> <th>Zone rouge</th> <th>Par dessus</th> </tr> <tr> <td class = 'NotValue'>Altitude</td> <td id="altZoneJaune" class = "celda">2000</td> <td id="altZoneRouge" class = "celda">3000</td> <td id="altParDessus" class = "celda">1000</td> </tr> </table>
+
+	<table id="tableMouvementCellule" class = "table"> <tr> <th colspan="2"> </th> <th>Direction</th> <th>Vitesse</th> </tr> <tr> <td colspan="2" class = 'NotValue'>Mouvement de la cellule</td> <td id="dirCellule" class = "celda">Droite</td> <td id="vitesseCellule" class = "celda">2000</td></tr> </table>
+
+	<div id="botonesTablaMovCel" class="modal">
+    <div id = "subBotonesTablaMovCel" class="modal-content">
+        <p>Choisir une option:</p>
+        <button id="opcion1">Opción 1</button>
+        <button id="opcion2">Opción 2</button>
+        <button id="opcion3">Opción 3</button>
+        <button id="annuler">Annuler</button>
+    </div>
+	</div>
+
+
+	<div id="matrizCorrelacion" class="popup">
+		
+		<!--<iframe src="pairesFacteursCorrelationImportance.html" width="2000" height="850" id='iframeCorrelacion'></iframe>-->
+		<!--<iframe src="pairesFacteursCorrelation.html" width="2000" height="850" id='iframeCorrelacion'></iframe>-->
+		<!--<iframe src="subTablasCorrelacion.html" width="2000" height="850" id='iframeCorrelacion'></iframe>-->
+		<!--<iframe src="tablaCorrelacionImportancia.html" width="2000" height="850" id='iframeCorrelacion'></iframe>-->
+		<!--<iframe src="DeplacementsFacteursTable.html" width="2000" height="850" id='iframeCorrelacion'></iframe>-->
+		<iframe src="tablaImportanciaFactores.html" width="2000" height="850" id='iframeCorrelacion'></iframe>
+	</div>
+
+	<div id="NASATLX" class="popup">
+		
+		<iframe src="NASA-TLX.html" width="2000" height="850" id='iframeNASATLX'></iframe>
+	</div>
+
+	<div id="trustInAuto1" class="popup">
+		
+		<iframe src="trustInAuto1b.html" width="2000" height="850" id='iframeTrustInAuto1'></iframe>
+	</div>
+
+	<div id="trustInAuto2" class="popup">
+		
+		<iframe src="trustInAuto2.html" width="2000" height="850" id='iframeTrustInAuto2'></iframe>
+	</div>
+
+	<div id="attenteEntrainement" class="popup">
+		
+		<iframe src="InstructionsPhaseRecommandation.html" width="2000" height="850" id='iframeattenteEntrainement'></iframe>
+	</div>
+
+	<div id="explicationContrefact" class="popup">
+		
+		<iframe src="InstructionsPhaseContrafactuels.html" width="2000" height="850" id='iframeexplicationContrefact'></iframe>
+	</div>
+
+
+	<div id="indicadorNumeroCaso">
+        <!-- Contenido -->
+    </div>
+
+	<script src="user2.js"></script>
+	<!--<script src="user_Co-Dot.js"></script>-->
+	<script src="images.js"></script>
+	<script src="functions.js"></script>
+	<script src="CAS_FAMILIARISATION.js"></script>
+	<!--<script src="APIcs.js"></script>-->
+
+  </body>
+</html>

@@ -1,6 +1,6 @@
 //*******************************************************************************************************************
 //
-//                                              EXPERIENCIA SIMPLE
+//                                                   FAMILIARIZACION
 //
 //*******************************************************************************************************************
 
@@ -32,15 +32,15 @@ if (participantCS == "8"){
 //const QUASApositions = [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90];
 // imagesData = imagesData.slice(-63, -20);
 // Randomized:
-imagesData = imagesData.slice(0, 170);
+imagesData = imagesData.slice(-10);
 // imagesData = imagesData.slice(0, 150);
 // imagesData = imagesData.slice(-20);
 console.log(imagesData.length)
-const QUASApositions = [ 7,  12,  19,  26,  31,  37,  42, 49,  56,  62,  69,  76,  81,  86,  91, 97, 104, 111, 118, 125, 130, 135, 141, 148, 154, 161, 166, 173, 180];
+const QUASApositions = [2]; // [ 7,  12,  19,  26,  31,  37,  42, 49,  56,  62,  69,  76,  81,  86,  91, 97, 104, 111, 118, 125, 130, 135, 141, 148, 154, 161, 166, 173, 180];
 //const counterfactPositions = [2, 4, 6];
-const counterfactPositions = Array.from({length: 20}, (_, i) => imagesData.length - 40 + i);
+const counterfactPositions = Array.from({length: 3}, (_, i) => imagesData.length - 5 + i);
 // console.log(counterfactPositions);
-const recommendationPositions = Array.from({length: 20}, (_, i) => imagesData.length - 20 + i);
+const recommendationPositions = Array.from({length: 2}, (_, i) => imagesData.length - 2 + i);
 console.log(recommendationPositions)
 // session = 2;
 // console.log(imagesData.length);
