@@ -33,7 +33,19 @@ if (participantCS == "8"){
 // imagesData = imagesData.slice(-63, -20);
 // Randomized:
 imagesData = imagesData.slice(0, 170);
-console.log(imagesData);
+
+function shuffleArrayOfJSONs(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+imagesData = shuffleArray(imagesData);
+
+
+// console.log(imagesData);
 // imagesData = imagesData.slice(0, 150);
 // imagesData = imagesData.slice(-20);
 console.log(imagesData.length)
