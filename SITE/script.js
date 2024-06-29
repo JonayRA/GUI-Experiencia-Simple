@@ -33,6 +33,7 @@ if (participantCS == "8"){
 // imagesData = imagesData.slice(-63, -20);
 // Randomized:
 imagesData = imagesData.slice(0, 170);
+console.log(imagesData);
 // imagesData = imagesData.slice(0, 150);
 // imagesData = imagesData.slice(-20);
 console.log(imagesData.length)
@@ -2821,7 +2822,7 @@ async function saveData2(ArrayJSONS){
 
 
 
-    const sexe = localStorage.getItem('sexe');
+    /*const sexe = localStorage.getItem('sexe');
     const genre = localStorage.getItem('genre');
     const age = localStorage.getItem('age');
     const niveauScolarite = localStorage.getItem('niveauScolarite');
@@ -2831,19 +2832,34 @@ async function saveData2(ArrayJSONS){
     const pilotageHours = localStorage.getItem('pilotageHours');
     const simulatorFrequency = localStorage.getItem('simulatorFrequency');
     const aviationType = localStorage.getItem('aviationType');
-    const remarks = localStorage.getItem('remarks');
+    const remarks = localStorage.getItem('remarks');*/
+    
 
-    const fileContent = JSON.stringify(data, null, 2);
-    const bb = new Blob([fileContent], { type: "application/json" });
+    const dataSocioDemo = {
+        sexe: localStorage.getItem('sexe'),
+        genre: localStorage.getItem('genre'),
+        age: localStorage.getItem('age'),
+        niveauScolarite: localStorage.getItem('niveauScolarite'),
+        niveauFrancais: localStorage.getItem('niveauFrancais'),
+        experienceVol: localStorage.getItem('experienceVol'),
+        typeExperienceVol: localStorage.getItem('typeExperienceVol'),
+        pilotageHours: localStorage.getItem('pilotageHours'),
+        simulatorFrequency: localStorage.getItem('simulatorFrequency'),
+        aviationType: localStorage.getItem('aviationType'),
+        remarks: localStorage.getItem('remarks')
+    };
+
+    const fileContentSocioDemo = JSON.stringify(dataSocioDemo, null, 2);
+    const bbSocioDemo = new Blob([fileContentSocioDemo], { type: "application/json" });
 
     // Creating download link
-    const fileName = `sociodemographique_participant${numParticipant}_session${session}_condition${condition}.json`;
+    const fileNameSocioDemo = `sociodemographique_participant${numParticipant}_session${session}_condition${condition}.json`;
 
-    const a = document.createElement('a');
-    a.download = fileName;
-    a.href = window.URL.createObjectURL(bb);
-    a.click();
-    a.remove();
+    const aSocioDemo = document.createElement('a');
+    aSocioDemo.download = fileNameSocioDemo;
+    aSocioDemo.href = window.URL.createObjectURL(bbSocioDemo);
+    aSocioDemo.click();
+    aSocioDemo.remove();
 
 
 
