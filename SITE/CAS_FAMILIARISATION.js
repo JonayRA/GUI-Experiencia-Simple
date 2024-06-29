@@ -855,13 +855,15 @@ async function cambiarCaso() {
     session = 2;
     console.log(arrayJSONSentrainement);
 
-    enviarJSONaCSV(arrayJSONSentrainement, 38, participantCS);
+    // enviarJSONaCSV(arrayJSONSentrainement, 38, participantCS);
     /*let modelosEntrenados = await modelsTrained(38,2);
     if (modelosEntrenados == true){
       var mensaje = 'Modelos are trained';
       iframePopupEntrainement.contentWindow.postMessage({ message: mensaje, data: '*' }, '*');
     }*/
-    setTimeout(async function() {
+    var mensaje = 'Modelos are trained';
+    iframePopupEntrainement.contentWindow.postMessage({ message: mensaje, data: '*' }, '*');
+    /*setTimeout(async function() {
     let modelosEntrenados = await modelsTrained(38,participantCS);
     if (modelosEntrenados == true){
         var mensaje = 'Modelos are trained';
@@ -877,7 +879,7 @@ async function cambiarCaso() {
             }
         }, 10000); 
     }
-}, 75000); 
+}, 75000); */
     //console.log('ModelsTrained',modelosEntrenados);
 
     // console.log(arrayJSONSGuardar);
