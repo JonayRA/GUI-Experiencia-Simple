@@ -2821,6 +2821,34 @@ async function saveData2(ArrayJSONS){
 
 
 
+    const sexe = localStorage.getItem('sexe');
+    const genre = localStorage.getItem('genre');
+    const age = localStorage.getItem('age');
+    const niveauScolarite = localStorage.getItem('niveauScolarite');
+    const niveauFrancais = localStorage.getItem('niveauFrancais');
+    const experienceVol = localStorage.getItem('experienceVol');
+    const typeExperienceVol = localStorage.getItem('typeExperienceVol');
+    const pilotageHours = localStorage.getItem('pilotageHours');
+    const simulatorFrequency = localStorage.getItem('simulatorFrequency');
+    const aviationType = localStorage.getItem('aviationType');
+    const remarks = localStorage.getItem('remarks');
+
+    const fileContent = JSON.stringify(data, null, 2);
+    const bb = new Blob([fileContent], { type: "application/json" });
+
+    // Creating download link
+    const fileName = `sociodemographique_participant${numParticipant}_session${session}_condition${condition}.json`;
+
+    const a = document.createElement('a');
+    a.download = fileName;
+    a.href = window.URL.createObjectURL(bb);
+    a.click();
+    a.remove();
+
+
+
+
+
 
 
 	const fileContent = JSON.stringify(ArrayJSONS, null, 2);
