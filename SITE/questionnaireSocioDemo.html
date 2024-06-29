@@ -31,6 +31,7 @@
             border: none;
             cursor: pointer;
         }
+
     </style>
 </head>
 <body>
@@ -70,6 +71,54 @@
         <label for="niveauFrancais" id="texteniveauFrancais">Niveau de maîtrise du français (0 à 10):</label>
         <input type="number" id="niveauFrancais" name="niveauFrancais" min="0" max="10"><br><br>
 
+                <label for="experienceVol">Avez-vous de l'expérience en pilotage ou avec des simulateurs de vol (incluant des jeux vidéo comme Flight Simulator X) ?</label>
+        <select id="experienceVol" name="experienceVol" onchange="showTypeExperienceVol()">
+            <option value="" selected>Veuillez choisir</option>
+            <option value="non">Non</option>
+            <option value="oui">Oui</option>
+        </select><br><br>
+
+        <div id="typeExperienceVolSection" style="display:none;">
+            <label for="typeExperienceVol">Quel type d'expérience avez-vous ?</label>
+            <select id="typeExperienceVol" name="typeExperienceVol" onchange="showAdditionalQuestions()">
+                <option value="" selected>Veuillez choisir</option>
+                <option value="ouiLesDeux">En pilotage et avec des simulateurs</option>
+                <option value="ouiPilotage">Uniquement en pilotage</option>
+                <option value="ouiSimulateurOuJeux">Uniquement avec des simulateurs (ou jeux)</option>
+            </select><br><br>
+        </div>
+
+        <div id="pilotageHoursSection" style="display:none;">
+            <label for="pilotageHours">Combien d'heures de vol approximativement avez-vous accumulées ?</label>
+            <input type="number" id="pilotageHours" name="pilotageHours" min="0"><br><br>
+        </div>
+
+        <div id="simulatorFrequencySection" style="display:none;">
+            <label for="simulatorFrequency">À quelle fréquence utilisez-vous des simulateurs de vol ou des jeux vidéo de simulation de vol ?</label>
+            <select id="simulatorFrequency" name="simulatorFrequency">
+                <option value="" selected>Veuillez choisir</option>
+                <option value="quotidienne">Quotidienne</option>
+                <option value="hebdomadaire">Hebdomadaire</option>
+                <option value="mensuelle">Mensuelle</option>
+                <option value="occasionnelle">Occasionnelle</option>
+            </select><br><br>
+        </div>
+
+        <div id="aviationTypeSection" style="display:none;">
+            <label for="aviationType">Quel type d'aviation pratiquez-vous ?</label>
+            <select id="aviationType" name="aviationType">
+                <option value="" selected>Veuillez choisir</option>
+                <option value="civileGenerale">Civile générale</option>
+                <option value="commerciale">Commerciale</option>
+                <option value="militaire">Militaire</option>
+            </select><br><br>
+        </div>
+
+        <div id="remarksSection" style="display:none;">
+            <label for="remarks">Remarques supplémentaires sur votre expérience :</label>
+            <textarea id="remarks" name="remarks" rows="4" cols="50"></textarea><br><br>
+        </div>
+
         
         <button type="button" id="enlaceBoton">Débuter l'expérience</button>
     </form>
@@ -89,6 +138,38 @@
         document.getElementById('niveauFrancais').style.display = 'none';
         document.getElementById('texteniveauFrancais').style.display = 'none';
 
+        function showTypeExperienceVol() {
+            var experienceVol = document.getElementById("experienceVol").value;
+            var typeExperienceVolSection = document.getElementById("typeExperienceVolSection");
+            typeExperienceVolSection.style.display = (experienceVol === "oui") ? "block" : "none";
+        }
+
+        function showAdditionalQuestions() {
+            var typeExperienceVol = document.getElementById("typeExperienceVol").value;
+            var pilotageHoursSection = document.getElementById("pilotageHoursSection");
+            var simulatorFrequencySection = document.getElementById("simulatorFrequencySection");
+            var aviationTypeSection = document.getElementById("aviationTypeSection");
+            var remarksSection = document.getElementById("remarksSection");
+
+            pilotageHoursSection.style.display = "none";
+            simulatorFrequencySection.style.display = "none";
+            aviationTypeSection.style.display = "none";
+            remarksSection.style.display = "none";
+            
+            if (typeExperienceVol === "ouiLesDeux" || typeExperienceVol === "ouiPilotage") {
+                pilotageHoursSection.style.display = "block";
+                aviationTypeSection.style.display = "block";
+                remarksSection.style.display = "block";
+            }
+            
+            if (typeExperienceVol === "ouiLesDeux" || typeExperienceVol === "ouiSimulateurOuJeux") {
+                simulatorFrequencySection.style.display = "block";
+                remarksSection.style.display = "block";
+            }
+        }
+
+
+
         enlaceBoton.addEventListener('click', function() {
             
                 const sexe = document.getElementById('sexe').value;
@@ -96,8 +177,18 @@
                 const age = document.getElementById('age').value;
                 const niveauScolarite = document.getElementById('niveauScolarite').value;
                 const niveauFrancais = document.getElementById('niveauFrancais').value;
+                const experienceVol = document.getElementById('experienceVol').value;
+                const typeExperienceVol = document.getElementById('typeExperienceVol').value;
+                const pilotageHours = document.getElementById('pilotageHours').value;
+                const simulatorFrequency = document.getElementById('simulatorFrequency').value;
+                const aviationType = document.getElementById('aviationType').value;
+                const remarks = document.getElementById('remarks').value;
 
-                if (!sexe || !genre || !age || !niveauScolarite) {
+                if (!sexe || !genre || !age || !niveauScolarite || !experienceVol || 
+                    (experienceVol === "oui" && !typeExperienceVol) ||
+                    (typeExperienceVol && (typeExperienceVol === "ouiPilotage" || typeExperienceVol === "ouiLesDeux") && !pilotageHours) ||
+                    (typeExperienceVol && (typeExperienceVol === "ouiSimulateurOuJeux" || typeExperienceVol === "ouiLesDeux") && !simulatorFrequency) ||
+                    (typeExperienceVol && (typeExperienceVol === "ouiPilotage" || typeExperienceVol === "ouiLesDeux") && !aviationType)) {
                     alert("Veuillez remplir tous les champs.");
                     return;
                 }
@@ -107,6 +198,12 @@
                 localStorage.setItem("age", age);
                 localStorage.setItem("niveauScolarite", niveauScolarite);
                 localStorage.setItem("niveauFrancais", niveauFrancais);
+                localStorage.setItem("experienceVol", experienceVol);
+                localStorage.setItem("typeExperienceVol", typeExperienceVol);
+                localStorage.setItem("pilotageHours", pilotageHours);
+                localStorage.setItem("simulatorFrequency", simulatorFrequency);
+                localStorage.setItem("aviationType", aviationType);
+                localStorage.setItem("remarks", remarks);
 
                 // window.location.href = "contrafactual.html?numParticipant=" + encodeURIComponent(numParticipant) + "&condition=" + encodeURIComponent(condition) + "&session=" + encodeURIComponent(session) + "&numParticipantCS=" + encodeURIComponent(participantCS) + "&numParticipantCS2=" + encodeURIComponent(participantCS2) + "&conditionPetiteXP=" + encodeURIComponent(conditionPetiteXP);
                 window.location.href = "Instructions.html?numParticipant=" + encodeURIComponent(numParticipant) + "&condition=" + encodeURIComponent(condition) + "&session=" + encodeURIComponent(session) + "&numParticipantCS=" + encodeURIComponent(participantCS) + "&numParticipantCS2=" + encodeURIComponent(participantCS2) + "&conditionPetiteXP=" + encodeURIComponent(conditionPetiteXP);
