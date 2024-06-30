@@ -36,12 +36,13 @@ imagesData = imagesData.slice(-10);
 // imagesData = imagesData.slice(0, 150);
 // imagesData = imagesData.slice(-20);
 console.log(imagesData.length)
-const QUASApositions = [2]; // [ 7,  12,  19,  26,  31,  37,  42, 49,  56,  62,  69,  76,  81,  86,  91, 97, 104, 111, 118, 125, 130, 135, 141, 148, 154, 161, 166, 173, 180];
+const QUASApositions = [1]; // [ 7,  12,  19,  26,  31,  37,  42, 49,  56,  62,  69,  76,  81,  86,  91, 97, 104, 111, 118, 125, 130, 135, 141, 148, 154, 161, 166, 173, 180];
 //const counterfactPositions = [2, 4, 6];
-const counterfactPositions = Array.from({length: 3}, (_, i) => imagesData.length - 5 + i);
+const counterfactPositions = Array.from({length: 3}, (_, i) => imagesData.length - 7 + i);
 // console.log(counterfactPositions);
-const recommendationPositions = Array.from({length: 2}, (_, i) => imagesData.length - 2 + i);
-console.log(recommendationPositions)
+const recommendationPositions = Array.from({length: 4}, (_, i) => imagesData.length - 4 + i);
+const recomendations = [1, 2, 3, 0];
+console.log(recommendationPositions);
 // session = 2;
 // console.log(imagesData.length);
 
@@ -1819,7 +1820,10 @@ buttonOption1.addEventListener('click', async function () {
 
         //console.log('Feautres', feautresCalculadas.features);
 
-        recomendacionCS = await getRecommendationCS(participantCS,feautresCalculadas.features);
+        // recomendacionCS = await getRecommendationCS(participantCS,feautresCalculadas.features);
+         
+        let position = recommendationPositions.indexOf(currentImage);
+        recomendacionCS = recomendations[position];
         //console.log("recomendacionCS",recomendacionCS);
         let recommendation;
 
@@ -1981,8 +1985,10 @@ buttonOption2.addEventListener('click', async function () {
 
         let feautresCalculadas = calculadoraVariablesCS(currentImage);
 
-        recomendacionCS = await getRecommendationCS(participantCS,feautresCalculadas.features);
-        console.log("recomendacionCS",recomendacionCS);
+        /*recomendacionCS = await getRecommendationCS(participantCS,feautresCalculadas.features);
+        console.log("recomendacionCS",recomendacionCS);*/
+        let position = recommendationPositions.indexOf(currentImage);
+        recomendacionCS = recomendations[position];
         let recommendation;
 
         //console.log(promesaCS);
@@ -2279,8 +2285,10 @@ buttonsansChangement.addEventListener('click', async function(){
 
 			let feautresCalculadas = calculadoraVariablesCS(currentImage);
 
-  			recomendacionCS = await getRecommendationCS(participantCS,feautresCalculadas.features);
-  			console.log("recomendacionCS",recomendacionCS);
+  			/*recomendacionCS = await getRecommendationCS(participantCS,feautresCalculadas.features);
+  			console.log("recomendacionCS",recomendacionCS);*/
+  			let position = recommendationPositions.indexOf(currentImage);
+        	recomendacionCS = recomendations[position];
   			let recommendation;
 
   			//console.log(promesaCS);
@@ -2371,8 +2379,10 @@ buttonParDessus.addEventListener('click', async function(){
 			if((condition == 2 || condition == 3) && (session == 2 || session == 3)){
 
 			let feautresCalculadas = calculadoraVariablesCS(currentImage);
-  			recomendacionCS = await getRecommendationCS(participantCS,feautresCalculadas.features);
-  			console.log("recomendacionCS",recomendacionCS);
+  			/*recomendacionCS = await getRecommendationCS(participantCS,feautresCalculadas.features);
+  			console.log("recomendacionCS",recomendacionCS);*/
+  			let position = recommendationPositions.indexOf(currentImage);
+        	recomendacionCS = recomendations[position];
   			let recommendation;
 
   			//console.log(promesaCS);
