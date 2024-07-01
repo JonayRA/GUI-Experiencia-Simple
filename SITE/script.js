@@ -15,6 +15,7 @@ console.log(participantCS);
 const participantCS2 = urlParams.get("numParticipantCS2");
 const nombreDeCasContrefactuels = 20;
 const conditionPetiteXP = urlParams.get("conditionPetiteXP");
+const problemNumberCS = 43;
 
 var title = document.getElementById("Titulo");
 title.textContent = "P" + numParticipant + "C" + condition + "S" + session;
@@ -868,21 +869,21 @@ async function cambiarCaso() {
     session = 2;
     console.log(arrayJSONSentrainement);
 
-    enviarJSONaCSV(arrayJSONSentrainement, 38, participantCS);
+    enviarJSONaCSV(arrayJSONSentrainement, problemNumberCS, participantCS);
     /*let modelosEntrenados = await modelsTrained(38,2);
     if (modelosEntrenados == true){
       var mensaje = 'Modelos are trained';
       iframePopupEntrainement.contentWindow.postMessage({ message: mensaje, data: '*' }, '*');
     }*/
     setTimeout(async function() {
-    let modelosEntrenados = await modelsTrained(38,participantCS);
+    let modelosEntrenados = await modelsTrained(problemNumberCS,participantCS);
     if (modelosEntrenados == true){
         var mensaje = 'Modelos are trained';
         iframePopupEntrainement.contentWindow.postMessage({ message: mensaje, data: '*' }, '*');
     } else {
         console.log('Aun no entrenados');
         var intervalId = setInterval(async function() {
-            modelosEntrenados = await modelsTrained(38,participantCS);
+            modelosEntrenados = await modelsTrained(problemNumberCS,participantCS);
             if (modelosEntrenados == true){
                 var mensaje = 'Modelos are trained';
                 iframePopupEntrainement.contentWindow.postMessage({ message: mensaje, data: '*' }, '*');
